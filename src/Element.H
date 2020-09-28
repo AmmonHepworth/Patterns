@@ -9,6 +9,7 @@
 
 #include "Node.H"
 #include "NamedNodeMap.H"
+class XMLValidator;
 
 namespace dom
 {
@@ -39,7 +40,7 @@ namespace dom
 /** STRATEGY PATTERN - ConcreteStrategy
  * This is a ConcreteStrategy, as it implements its own strategy for serialize()
  **/
-class Element_Impl : public virtual dom::Element, Node_Impl
+class Element_Impl : public virtual dom::Element, public virtual Node_Impl
 {
 private:
 	NamedNodeMap_Impl	attributes;
@@ -64,6 +65,26 @@ public:
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
 
 	virtual std::string serialize(int level=0);
+};
+
+class ElementDecorator : public virtual dom::Element
+{
+	protected:
+	Element_Impl * decoratedElement;
+
+};
+
+class ElementConcreteDecorator : public virtual ElementDecorator, public virtual Node_Impl
+{
+	private:
+	XMLValidator * validator;
+
+	public:
+	ElementConcreteDecorator(Element_Impl*, XMLValidator*);
+	virtual void			setAttributeNode(dom::Node * newChild, std::string & name);
+	virtual void			setAttribute(const std::string & name, const std::string & value);
+	virtual dom::Node *		appendChild(dom::Node * newChild);
+
 };
 
 #endif // ELEMENT_H

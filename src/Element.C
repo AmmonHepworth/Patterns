@@ -190,3 +190,47 @@ std::string Element_Impl::serialize(int indentationLevel)
 	}
 	return ss.str();
 }
+
+ElementConcreteDecorator::ElementConcreteDecorator(Element_Impl* elem, XMLValidator* val)
+{
+	decoratedElement = elem;
+	validator = val;
+}
+
+void ElementConcreteDecorator::setAttributeNode(dom::Node * attrNode, std::string & name)
+{
+	dom::Attr * attr = dynamic_cast<dom::Attr * >(attrNode);
+	if (validator->canAddAttribute(decoratedElement, name))
+	{
+		decoratedElement->setAttributeNode(attr);
+	}
+	else
+	{
+		printf("Attempted invalid schema operation.");
+		exit(0);
+	}
+}
+
+void ElementConcreteDecorator::setAttribute(const std::string & name, const std::string & value)
+{
+	if (validator->canAddAttribute(decoratedElement, "attribute"))
+		decoratedElement->setAttribute(name, value);
+	else
+	{
+		printf("Attempted invalid schema operation.");
+		exit(0);
+	}
+}
+
+dom::Node *	ElementConcreteDecorator::appendChild(dom::Node * child)
+{
+	if (validator->canAddElement(decoratedElement, "element") || validator->canAddText(decoratedElement))
+	{
+		decoratedElement->appendChild(child);
+	}
+	else
+	{
+		printf("Attempted invalid schema operation.");
+		exit(0);
+	}
+}

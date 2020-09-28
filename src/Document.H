@@ -6,6 +6,8 @@
 #include <sstream>
 
 #include "Node.H"
+#include "XMLValidator.H"
+#include "WhiteSpaceStrategy.H"
 
 namespace dom
 {
@@ -39,6 +41,33 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);
 	virtual dom::Element *	getDocumentElement();
 	virtual std::string serialize(int level=0);
+};
+
+class DocumentDecorator : public virtual dom::Document
+{
+	protected:
+	Document_Impl* decoratedDocument;
+
+};
+
+class DocumentConcreteDecorator : public virtual DocumentDecorator, public virtual Node_Impl
+{
+	private:
+	XMLValidator * validator;
+
+
+	public:
+	DocumentConcreteDecorator(Document_Impl*, XMLValidator*);
+
+	//method forwarding to decorated document
+	virtual dom::Element *	createElement(const std::string & tagName);
+	virtual dom::Text *	createTextNode(const std::string & data);
+	virtual dom::Attr *	createAttribute(const std::string & name);
+	virtual dom::Element *	getDocumentElement();
+	virtual dom::Node *  appendChild(dom::Node * child);
+	virtual std::string serialize(int);
+	virtual void setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy * s);
+
 };
 
 #endif // DOCUMENT_H
