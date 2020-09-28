@@ -107,19 +107,14 @@ dom::Text *		Text_Impl::splitText(int offset)
 }
 
 /**STRATEGY PATTERN
- * Implementation for ConcreteStrategy. Used in XMLSerializer
+ * Implementation of strategy algorithm for ConcreteStrategy. Used in XMLSerializer
  **/
-std::string Text_Impl::getDataSerializable(void)
+std::string Text_Impl::serialize(int indentationLevel)
 {
-	return this->getData();
-}
-
-
-void Text_Impl::serialize(std::fstream& file, bool whiteSpace, int indentationLevel)
-{
-	for (int i = 0; i < indentationLevel; i++)
-		file << "\t";
+	std::stringstream ss;
+	ss << wsStrategy->getIndent(indentationLevel);
 	//prettyIndentation();
-	file << this->getDataSerializable();
-	file << "\n";
+	ss << this->getData();
+	ss << wsStrategy->getWhiteSpace();
+	return ss.str();
 }

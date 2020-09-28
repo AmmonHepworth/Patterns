@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <sstream>
 
 
 #include "Node.H"
@@ -35,8 +36,8 @@ namespace dom
 	};
 };
 
-/** STRATEGY PATTERN
- * This is a ConcreteStrategy, as it implements its own strategy for getDataSerializable()
+/** STRATEGY PATTERN - ConcreteStrategy
+ * This is a ConcreteStrategy, as it implements its own strategy for serialize()
  **/
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
@@ -61,8 +62,8 @@ public:
 
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
-	std::string             getDataSerializable(void);
-	virtual void            serialize(std::fstream&, bool, int);
+
+	virtual std::string serialize(int level=0);
 };
 
 #endif // ELEMENT_H

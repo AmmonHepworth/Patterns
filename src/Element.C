@@ -142,21 +142,15 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 }
 
 /** STRATEGY PATTERN 
- * Implementation of strategy inferface from Node
+ * This function is itself an Implementation of strategy inferface for serialization from Node
+ * 
+ * This function in turn uses a whitespace Strategy to determine if the whitespace is pretty or minimal
  **/
-std::string Element_Impl::getDataSerializable(void)
+std::string Element_Impl::serialize(int indentationLevel)
 {
 	std::stringstream ss;
+	ss << wsStrategy->getIndent(indentationLevel);
 	ss << "<" << this->getTagName();
-	return  ss.str();
-}
-
-void Element_Impl::serialize(std::fstream& file, bool whiteSpace, int indentationLevel)
-{
-	for (int i = 0; i < indentationLevel; i++)
-		file << "\t";
-	//prettyIndentation();
-	file << this->getDataSerializable();
 
 	int	attrCount	= 0;
 
@@ -164,37 +158,35 @@ void Element_Impl::serialize(std::fstream& file, bool whiteSpace, int indentatio
 		i != this->getAttributes()->end();
 		i++)
 	{
-		(*i)->serialize(file, whiteSpace, indentationLevel);
-		//serializePretty(*i);
+		ss <<(*i)->serialize(indentationLevel);
 		attrCount++;
 	}
 
 	if (attrCount > 0)
-		file << " ";
+		ss << " ";
 
 	if (this->getChildNodes()->size() == 0)
 	{
-		file << "/>";
-		file << "\n";
+		ss << "/>";
+		ss << wsStrategy->getWhiteSpace();
 	}
 	else
 	{
-		file << ">";
-		file << "\n";
+		ss << ">";
+		ss << wsStrategy->getWhiteSpace();
 		indentationLevel++;
 
 		for (dom::NodeList::iterator i = this->getChildNodes()->begin();
 			i != this->getChildNodes()->end();
 			i++)
 			if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-				(*i)->serialize(file, whiteSpace, indentationLevel);
+				ss << (*i)->serialize(indentationLevel);
 				//serializePretty(*i);
 
 		indentationLevel--;
-		for (int i = 0; i < indentationLevel; i++)
-			file << "\t";
-		//prettyIndentation();
-		file << "</" << this->getTagName() + ">";
-		file << "\n";
+		ss << wsStrategy->getIndent(indentationLevel);
+		ss << "</" << this->getTagName() + ">";
+		ss << wsStrategy->getWhiteSpace();
 	}
+	return ss.str();
 }

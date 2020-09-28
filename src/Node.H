@@ -2,18 +2,25 @@
 #define NODE_H
 
 #include <string>
-#include <fstream>
+#include <iostream>
 #include "NodeList.H"
+#include "WhiteSpaceStrategy.H"
 
 namespace dom
 {
 	class Document;
 
-	/** STRATEGY PATTERN
+	/** STRATEGY PATTERN - Strategy
 	 *  Node operates as the "Strategy" class in this pattern
-	 *  Below we see the common interface method "getDataSerializable" that 
+	 *  Below we see the common interface method "serialize" that 
 	 *   the ConcreteStrategies (Text_Impl, Attr_Impl, Element_Impl) will implement
 	 *  This will then be used by the XMLSerializer to write the appropriate data
+	 **/
+	/** STRATEGY PATTERN - Context
+	 * The Nodes also play the part of a context, having swappable WhiteSpaceStrategies
+	 *  that will help determine the kind of whitespace to use in their serialization
+	 * In this way, there is a nested Strategy Pattern. This strategy will in turn 
+	 *  use yet another strategy.
 	 **/
 	class Node
 	{
@@ -42,8 +49,8 @@ namespace dom
 		virtual Node *			appendChild(Node * newChild)			= 0;
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
-		virtual std::string     getDataSerializable(void)       = 0;
-		virtual void            serialize(std::fstream&, bool, int) = 0;
+		virtual std::string     serialize(int indentlevel=0)                   = 0;
+		virtual void 			setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy * strategy) = 0;
 	};
 
 	class DOMException
@@ -81,6 +88,7 @@ private:
 	dom::Node *			getSibling(int direction);
 protected:
 	dom::Document *	document;
+	WhiteSpaceStrategy*  wsStrategy;
 
 	Node_Impl(const std::string & name, short type);
 public:
@@ -103,8 +111,9 @@ public:
 	virtual dom::Node *		appendChild(dom::Node * newChild);
 	virtual bool			hasChildNodes(void);
 	virtual const std::string &	getLocalName(void);
-	virtual std::string     getDataSerializable(void);
-	virtual void            serialize(std::fstream&, bool, int);
+	//Methods from strategy implementation
+	virtual std::string     serialize(int indentLevel=0);
+	virtual void 			setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy * strategy);
 
 	virtual void setParent(dom::Node * parent);
 };

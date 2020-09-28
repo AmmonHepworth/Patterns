@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <sstream>
 
 #include "Node.H"
 
@@ -25,7 +26,7 @@ namespace dom
 };
 
 /** STRATEGY PATTERN
- * This is a ConcreteStrategy, as it implements its own strategy for getDataSerializable()
+ * This is a ConcreteStrategy, as it implements its own strategy for serialize()
  **/
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
@@ -43,8 +44,7 @@ public:
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
 
-	virtual std::string     getDataSerializable(void);
-	virtual void            serialize(std::fstream&, bool, int);
+	virtual std::string serialize(int level=0);
 };
 
 #endif // ATTR_H

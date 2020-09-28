@@ -36,17 +36,14 @@ dom::Element * Document_Impl::getDocumentElement()
 }
 
 /** STRATEGY PATTERN 
- * Implementation of strategy inferface from Node
+ * Implementation of whitespace strategy inferface from Node
  **/
-std::string Document_Impl::getDataSerializable(void)
+std::string Document_Impl::serialize(int indentation)
 {
-	return  "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-}
-
-void Document_Impl::serialize(std::fstream& file, bool whiteSpace, int indentation)
-{
-		file << this->getDataSerializable();
-		file << "\n";
-		this->getDocumentElement()->serialize(file,whiteSpace,indentation);
+		std::stringstream file;
+		file <<  "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		file << wsStrategy->getWhiteSpace();
+		file << this->getDocumentElement()->serialize(indentation);
+		return file.str();
 		//serializePretty(dynamic_cast<dom::Document *>(node)->getDocumentElement());
 }

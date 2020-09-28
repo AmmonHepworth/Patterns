@@ -5,6 +5,12 @@
 
 #include "Node.H"
 
+
+/** STRATEGY PATTERN - Context
+ * This class serves as a context to the serialization strategies that the nodes employ
+ * Each of the nodes knows how to best serialize itself and its children, so the 
+ * serializer will leave that work up to them.
+ **/
 class XMLSerializer
 {
 private:

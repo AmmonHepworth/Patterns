@@ -29,5 +29,7 @@ target_sources(Patterns PUBLIC
 	XMLTokenizer.H
 	XMLValidator.C
 	XMLValidator.H
+	WhiteSpaceStrategy.H
+	WhiteSpaceStrategy.C
 	)
 target_link_libraries(Patterns boost_regex)

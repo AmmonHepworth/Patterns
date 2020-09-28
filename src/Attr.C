@@ -35,17 +35,11 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 }
 
 /** STRATEGY PATTERN 
- * Implementation of strategy inferface from Node
+ * Implementation of DOM data extraction strategy inferface from Node
  **/
-std::string Attr_Impl::getDataSerializable(void)
+std::string Attr_Impl::serialize(int indentationLevel)
 {
 	std::stringstream ss;
 	ss << " " << this->getName() << "=\"" << this->getValue() << "\"";
 	return ss.str();
-}
-
-
-void Attr_Impl::serialize(std::fstream& file, bool whiteSpace, int indentation)
-{
-	file << this->getDataSerializable();
 }

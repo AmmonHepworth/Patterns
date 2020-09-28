@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include <sstream>
 
 #include "Node.H"
 
@@ -30,8 +31,8 @@ namespace dom
 	};
 };
 
-/** STRATEGY PATTERN
- * This is a ConcreteStrategy, as it implements its own strategy for getDataSerializable()
+/** STRATEGY PATTERN - ConcreteStrategy
+ * This is a ConcreteStrategy, as it implements its own strategy for serialize()
  **/
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
@@ -55,8 +56,7 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual std::string     getDataSerializable(void);
-	virtual void            serialize(std::fstream&, bool, int);
+	virtual std::string serialize(int level=0);
 };
 
 #endif // TEXT_H
