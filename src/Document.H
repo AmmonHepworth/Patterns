@@ -16,6 +16,9 @@ namespace dom
 	class Attr;
 	class NodeList;
 
+	/** DECORATOR PATTERN - Component
+	 * This is the class that defines the interface for the Decorator and ConcreteDecorator
+	 **/
 	class Document : public virtual Node
 	{
 	public:
@@ -28,6 +31,10 @@ namespace dom
 
 /** STRATEGY PATTERN - ConcreteStrategy
  * This is a ConcreteStrategy, as it implements its own strategy for serialize()
+ **/
+/** DECORATOR PATTERN - ConcreteComponent
+ * This is the class that will be decorated to include its own validation when creating nodes
+ * Will also return a Decorated Element class in createElement()
  **/
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
@@ -43,6 +50,10 @@ public:
 	virtual std::string serialize(int level=0);
 };
 
+/** DECORATOR PATTERN - Decorator
+ * This is the class that would be the base class of all Document Decorators
+ * It stores a reference to the decorated class
+ **/
 class DocumentDecorator : public virtual dom::Document
 {
 	protected:
@@ -50,6 +61,10 @@ class DocumentDecorator : public virtual dom::Document
 
 };
 
+/** DECORATOR PATTERN - ConcreteDecorator
+ * This is the class that would be the base class of all Element Decorators
+ * It stores a reference to the decorated class
+ **/
 class DocumentConcreteDecorator : public virtual DocumentDecorator, public virtual Node_Impl
 {
 	private:

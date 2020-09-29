@@ -87,7 +87,7 @@ void			Element_Impl::removeAttribute(const std::string & name)
 	}
 }
 
-dom::Attr *		Element_Impl::removeAttributeNode(dom::Attr * oldAttr)
+dom::Attr *	Element_Impl::removeAttributeNode(dom::Attr * oldAttr)
 {
 	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
 		if (*i.operator->() == oldAttr)
@@ -100,7 +100,7 @@ dom::Attr *		Element_Impl::removeAttributeNode(dom::Attr * oldAttr)
 	throw dom::DOMException(dom::DOMException::NOT_FOUND_ERR, "Attribute not found.");
 }
 
-void			Element_Impl::setAttribute(const std::string & name, const std::string & value)
+void Element_Impl::setAttribute(const std::string & name, const std::string & value)
 {
 	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
 	{
@@ -191,18 +191,18 @@ std::string Element_Impl::serialize(int indentationLevel)
 	return ss.str();
 }
 
-ElementConcreteDecorator::ElementConcreteDecorator(Element_Impl* elem, XMLValidator* val)
+ElementConcreteDecorator::ElementConcreteDecorator(Element_Impl* elem, XMLValidator* val): Node_Impl("",dom::Node::ELEMENT_NODE)
 {
 	decoratedElement = elem;
 	validator = val;
+	Node_Impl::document	= elem->getOwnerDocument();
 }
 
-void ElementConcreteDecorator::setAttributeNode(dom::Node * attrNode, std::string & name)
+dom::Attr * ElementConcreteDecorator::setAttributeNode(dom::Attr * attr)
 {
-	dom::Attr * attr = dynamic_cast<dom::Attr * >(attrNode);
-	if (validator->canAddAttribute(decoratedElement, name))
+	if (validator->canAddAttribute(decoratedElement, attr->getName()))
 	{
-		decoratedElement->setAttributeNode(attr);
+		return decoratedElement->setAttributeNode(attr);
 	}
 	else
 	{
@@ -233,4 +233,49 @@ dom::Node *	ElementConcreteDecorator::appendChild(dom::Node * child)
 		printf("Attempted invalid schema operation.");
 		exit(0);
 	}
+}
+
+const std::string &	ElementConcreteDecorator::getAttribute(const std::string & name)
+{
+	return decoratedElement->getAttribute(name);
+}
+
+dom::Attr * ElementConcreteDecorator::getAttributeNode(const std::string & name)
+{
+	return decoratedElement->getAttributeNode(name);
+}
+
+dom::NodeList *	ElementConcreteDecorator::getElementsByTagName(const std::string & tagName)
+{
+	return decoratedElement->getElementsByTagName(tagName);
+}
+
+const std::string &	ElementConcreteDecorator::getTagName(void)
+{
+	return decoratedElement->getTagName();
+}
+
+bool ElementConcreteDecorator::hasAttribute(const std::string & name)
+{
+	return decoratedElement->hasAttribute(name);
+}
+
+void ElementConcreteDecorator::removeAttribute(const std::string & name)
+{
+	decoratedElement->removeAttribute(name);
+}
+
+dom::Attr *	ElementConcreteDecorator::removeAttributeNode(dom::Attr * oldAttr)
+{
+	return decoratedElement->removeAttributeNode(oldAttr);
+}
+
+void ElementConcreteDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
+{
+	decoratedElement->setWhiteSpaceStrategyRecursive(s);
+}
+
+std::string ElementConcreteDecorator::serialize(int level)
+{
+	return decoratedElement->serialize(level);
 }

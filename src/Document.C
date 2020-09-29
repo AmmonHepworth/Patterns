@@ -53,12 +53,13 @@ DocumentConcreteDecorator::DocumentConcreteDecorator(Document_Impl* doc, XMLVali
 {
 	decoratedDocument = doc;
 	validator = val;
+	Node_Impl::document	= decoratedDocument;
 }
 
 
 dom::Element *	DocumentConcreteDecorator::createElement(const std::string & tagName)
 {
-	return decoratedDocument->createElement(tagName);
+	return new ElementConcreteDecorator(new Element_Impl(tagName, decoratedDocument), validator);
 }
 
 dom::Text *	DocumentConcreteDecorator::createTextNode(const std::string & data)
@@ -84,14 +85,13 @@ dom::Node * DocumentConcreteDecorator::appendChild(dom::Node * child)
 {
 	if (validator->canRootElement("document"))
 	{
-		decoratedDocument->appendChild(child);
+		return decoratedDocument->appendChild(child);
 	}
 	else
 	{
 		printf("Attempted invalid schema operation.");
 		exit(0);
 	}
-	return decoratedDocument->appendChild(child);
 }
 
 std::string DocumentConcreteDecorator::serialize(int indentationLevel)
