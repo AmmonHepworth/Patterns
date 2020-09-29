@@ -55,7 +55,7 @@ protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
 public:
 	friend class Document_Impl;
-	friend class DocumentConcreteDecorator;
+	friend class ValidatedDocumentDecorator;
 
 	virtual ~Element_Impl();
 
@@ -90,13 +90,13 @@ class ElementDecorator : public virtual dom::Element
  * This is the class that would be the base class of all Element Decorators
  * It stores a reference to the decorated class
  **/
-class ElementConcreteDecorator : public virtual ElementDecorator, public virtual Node_Impl
+class ValidatedElementDecorator : public virtual ElementDecorator, public virtual Node_Impl
 {
 	private:
 	XMLValidator * validator;
 
 	public:
-	ElementConcreteDecorator(Element_Impl*, XMLValidator*);
+	ValidatedElementDecorator(Element_Impl*, XMLValidator*);
 	virtual dom::Attr*		setAttributeNode(dom::Attr * newChild);
 	virtual void			setAttribute(const std::string & name, const std::string & value);
 	virtual dom::Node *		appendChild(dom::Node * newChild);

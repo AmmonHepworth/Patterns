@@ -191,14 +191,16 @@ std::string Element_Impl::serialize(int indentationLevel)
 	return ss.str();
 }
 
-ElementConcreteDecorator::ElementConcreteDecorator(Element_Impl* elem, XMLValidator* val): Node_Impl("",dom::Node::ELEMENT_NODE)
+
+/******************DECORATOR******************/
+ValidatedElementDecorator::ValidatedElementDecorator(Element_Impl* elem, XMLValidator* val): Node_Impl("",dom::Node::ELEMENT_NODE)
 {
 	decoratedElement = elem;
 	validator = val;
 	Node_Impl::document	= elem->getOwnerDocument();
 }
 
-dom::Attr * ElementConcreteDecorator::setAttributeNode(dom::Attr * attr)
+dom::Attr * ValidatedElementDecorator::setAttributeNode(dom::Attr * attr)
 {
 	if (validator->canAddAttribute(decoratedElement, attr->getName()))
 	{
@@ -211,7 +213,7 @@ dom::Attr * ElementConcreteDecorator::setAttributeNode(dom::Attr * attr)
 	}
 }
 
-void ElementConcreteDecorator::setAttribute(const std::string & name, const std::string & value)
+void ValidatedElementDecorator::setAttribute(const std::string & name, const std::string & value)
 {
 	if (validator->canAddAttribute(decoratedElement, "attribute"))
 		decoratedElement->setAttribute(name, value);
@@ -222,7 +224,7 @@ void ElementConcreteDecorator::setAttribute(const std::string & name, const std:
 	}
 }
 
-dom::Node *	ElementConcreteDecorator::appendChild(dom::Node * child)
+dom::Node *	ValidatedElementDecorator::appendChild(dom::Node * child)
 {
 	if (validator->canAddElement(decoratedElement, "element") || validator->canAddText(decoratedElement))
 	{
@@ -235,47 +237,47 @@ dom::Node *	ElementConcreteDecorator::appendChild(dom::Node * child)
 	}
 }
 
-const std::string &	ElementConcreteDecorator::getAttribute(const std::string & name)
+const std::string &	ValidatedElementDecorator::getAttribute(const std::string & name)
 {
 	return decoratedElement->getAttribute(name);
 }
 
-dom::Attr * ElementConcreteDecorator::getAttributeNode(const std::string & name)
+dom::Attr * ValidatedElementDecorator::getAttributeNode(const std::string & name)
 {
 	return decoratedElement->getAttributeNode(name);
 }
 
-dom::NodeList *	ElementConcreteDecorator::getElementsByTagName(const std::string & tagName)
+dom::NodeList *	ValidatedElementDecorator::getElementsByTagName(const std::string & tagName)
 {
 	return decoratedElement->getElementsByTagName(tagName);
 }
 
-const std::string &	ElementConcreteDecorator::getTagName(void)
+const std::string &	ValidatedElementDecorator::getTagName(void)
 {
 	return decoratedElement->getTagName();
 }
 
-bool ElementConcreteDecorator::hasAttribute(const std::string & name)
+bool ValidatedElementDecorator::hasAttribute(const std::string & name)
 {
 	return decoratedElement->hasAttribute(name);
 }
 
-void ElementConcreteDecorator::removeAttribute(const std::string & name)
+void ValidatedElementDecorator::removeAttribute(const std::string & name)
 {
 	decoratedElement->removeAttribute(name);
 }
 
-dom::Attr *	ElementConcreteDecorator::removeAttributeNode(dom::Attr * oldAttr)
+dom::Attr *	ValidatedElementDecorator::removeAttributeNode(dom::Attr * oldAttr)
 {
 	return decoratedElement->removeAttributeNode(oldAttr);
 }
 
-void ElementConcreteDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
+void ValidatedElementDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
 {
 	decoratedElement->setWhiteSpaceStrategyRecursive(s);
 }
 
-std::string ElementConcreteDecorator::serialize(int level)
+std::string ValidatedElementDecorator::serialize(int level)
 {
 	return decoratedElement->serialize(level);
 }

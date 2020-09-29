@@ -49,7 +49,7 @@ std::string Document_Impl::serialize(int indentation)
 
 
 
-DocumentConcreteDecorator::DocumentConcreteDecorator(Document_Impl* doc, XMLValidator* val):Node_Impl("",dom::Node::DOCUMENT_NODE)
+ValidatedDocumentDecorator::ValidatedDocumentDecorator(Document_Impl* doc, XMLValidator* val):Node_Impl("",dom::Node::DOCUMENT_NODE)
 {
 	decoratedDocument = doc;
 	validator = val;
@@ -57,22 +57,22 @@ DocumentConcreteDecorator::DocumentConcreteDecorator(Document_Impl* doc, XMLVali
 }
 
 
-dom::Element *	DocumentConcreteDecorator::createElement(const std::string & tagName)
+dom::Element *	ValidatedDocumentDecorator::createElement(const std::string & tagName)
 {
-	return new ElementConcreteDecorator(new Element_Impl(tagName, decoratedDocument), validator);
+	return new ValidatedElementDecorator(new Element_Impl(tagName, decoratedDocument), validator);
 }
 
-dom::Text *	DocumentConcreteDecorator::createTextNode(const std::string & data)
+dom::Text *	ValidatedDocumentDecorator::createTextNode(const std::string & data)
 {
 	return decoratedDocument->createTextNode(data);
 }
 
-dom::Attr *	DocumentConcreteDecorator::createAttribute(const std::string & name)
+dom::Attr *	ValidatedDocumentDecorator::createAttribute(const std::string & name)
 {
 	return decoratedDocument->createAttribute(name);
 }
 
-dom::Element * DocumentConcreteDecorator::getDocumentElement()
+dom::Element * ValidatedDocumentDecorator::getDocumentElement()
 {
 	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 		if (dynamic_cast<dom::Element *>(*i.operator->()) != 0)
@@ -81,7 +81,7 @@ dom::Element * DocumentConcreteDecorator::getDocumentElement()
 	return 0;
 }
 
-dom::Node * DocumentConcreteDecorator::appendChild(dom::Node * child)
+dom::Node * ValidatedDocumentDecorator::appendChild(dom::Node * child)
 {
 	if (validator->canRootElement("document"))
 	{
@@ -94,12 +94,12 @@ dom::Node * DocumentConcreteDecorator::appendChild(dom::Node * child)
 	}
 }
 
-std::string DocumentConcreteDecorator::serialize(int indentationLevel)
+std::string ValidatedDocumentDecorator::serialize(int indentationLevel)
 {
 	return decoratedDocument->serialize(indentationLevel);
 }
 
-void DocumentConcreteDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
+void ValidatedDocumentDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
 {
 	decoratedDocument->setWhiteSpaceStrategyRecursive(s);
 }

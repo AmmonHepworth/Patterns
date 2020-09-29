@@ -65,14 +65,14 @@ class DocumentDecorator : public virtual dom::Document
  * This is the class that would be the base class of all Element Decorators
  * It stores a reference to the decorated class
  **/
-class DocumentConcreteDecorator : public virtual DocumentDecorator, public virtual Node_Impl
+class ValidatedDocumentDecorator : public virtual DocumentDecorator, public virtual Node_Impl
 {
 	private:
 	XMLValidator * validator;
 
 
 	public:
-	DocumentConcreteDecorator(Document_Impl*, XMLValidator*);
+	ValidatedDocumentDecorator(Document_Impl*, XMLValidator*);
 
 	//method forwarding to decorated document
 	virtual dom::Element *	createElement(const std::string & tagName);
