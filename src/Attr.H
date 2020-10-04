@@ -2,9 +2,6 @@
 #define ATTR_H
 
 #include <string>
-#include <sstream>
-#include <fstream>
-#include <sstream>
 
 #include "Node.H"
 
@@ -25,9 +22,6 @@ namespace dom
 	};
 };
 
-/** STRATEGY PATTERN
- * This is a ConcreteStrategy, as it implements its own strategy for serialize()
- **/
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
 protected:
@@ -43,8 +37,6 @@ public:
 	virtual const std::string &	getValue(void);
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
-
-	virtual std::string serialize(int level=0);
 };
 
 #endif // ATTR_H

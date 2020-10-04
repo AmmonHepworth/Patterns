@@ -105,16 +105,3 @@ dom::Text *		Text_Impl::splitText(int offset)
 		throw dom::DOMException(dom::DOMException::INDEX_SIZE_ERR, "Index larget than Text node's value.");
 	}
 }
-
-/**STRATEGY PATTERN
- * Implementation of strategy algorithm for ConcreteStrategy. Used in XMLSerializer
- **/
-std::string Text_Impl::serialize(int indentationLevel)
-{
-	std::stringstream ss;
-	ss << wsStrategy->getIndent(indentationLevel);
-	//prettyIndentation();
-	ss << this->getData();
-	ss << wsStrategy->getWhiteSpace();
-	return ss.str();
-}
