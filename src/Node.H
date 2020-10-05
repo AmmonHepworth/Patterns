@@ -8,6 +8,13 @@ namespace dom
 {
 	class Document;
 
+	/** COMPOSITE PATTERN - Component
+	 * This class declares the interface that all dom nodes must obey
+	 * Even though Node_Impl gives defaults for all of the interface,
+	 *  this class creates the interface and Node_Impl is just a 
+	 *  convenient way to get the default implementations into
+	 *  all of the dom types and keep Node abstract 
+	 **/
 	class Node
 	{
 	public:

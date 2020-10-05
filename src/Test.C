@@ -52,12 +52,12 @@ void testTokenizer(int argc, char** argv)
 	dom::Text *	text	= document->createTextNode("Text Data");
 	dom::Attr *	attr	= document->createAttribute("NewAttribute");
 
-	printf("Element Tag = '%s'\n", element->getTagName().c_str());
+	printf("Element Tag = '%s'\n", element->getNodeName().c_str());
 	printf("Text Data = '%s'\n", text->getValue().c_str());
 	printf("Attr Name = '%s'\n", attr->getName().c_str());
 
 	element->setAttributeNode(attr);
-	printf("Element attribute '%s'='%s'\n", element->getTagName().c_str(), element->getAttribute("NewAttribute").c_str());
+	printf("Element attribute '%s'='%s'\n", element->getNodeName().c_str(), element->getAttribute("NewAttribute").c_str());
 
 	delete element;
 	delete text;

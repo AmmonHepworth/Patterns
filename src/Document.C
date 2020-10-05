@@ -34,3 +34,49 @@ dom::Element * Document_Impl::getDocumentElement()
 
 	return 0;
 }
+
+dom::Node *		Document_Impl::insertBefore(dom::Node * newChild, dom::Node * refChild)
+{
+	if (getChildNodes()->size() == 1 )
+		return 0;
+		
+	if (newChild->getOwnerDocument() != getOwnerDocument())
+		throw dom::DOMException(dom::DOMException::WRONG_DOCUMENT_ERR, "New Child is not a part of this document.");
+
+	if (newChild->getParentNode() != 0)
+		newChild->getParentNode()->removeChild(newChild);
+
+	if (refChild == 0)
+	{
+		getChildNodes()->push_back(newChild);
+		(dynamic_cast<Node_Impl *>(newChild))->setParent(this);
+		return newChild;
+	}
+
+	dom::NodeList::iterator	index	= getChildNodes()->find(refChild);
+
+	if (index == getChildNodes()->end())
+		throw dom::DOMException(dom::DOMException::NOT_FOUND_ERR, "Reference Child is not a child of this node.");
+
+	getChildNodes()->insert(++index, newChild);
+	(dynamic_cast<Node_Impl *>(newChild))->setParent(this);
+
+	return newChild;
+}
+
+dom::Node *		Document_Impl::appendChild(dom::Node * newChild)
+{
+	if (getChildNodes()->size() == 1 )
+		return 0;
+
+	if (newChild->getOwnerDocument() != getOwnerDocument())
+		throw dom::DOMException(dom::DOMException::WRONG_DOCUMENT_ERR, "New Child is not a part of this document.");
+
+	if (newChild->getParentNode() != 0)
+		newChild->getParentNode()->removeChild(newChild);
+
+	getChildNodes()->push_back(newChild);
+	(dynamic_cast<Node_Impl *>(newChild))->setParent(this);
+
+	return newChild;
+}

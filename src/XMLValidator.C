@@ -32,21 +32,21 @@ bool XMLValidator::canRootElement(std::string newElement)
 
 bool XMLValidator::canAddElement(dom::Element * element, std::string newElement)
 {
-	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element == 0 ? "" : element->getTagName());
+	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element == 0 ? "" : element->getNodeName());
 
 	return schemaElement == schema.end() ? true : (*schemaElement)->childIsValid(newElement, false);
 }
 
 bool XMLValidator::canAddText(dom::Element * element)
 {
-	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element->getTagName());
+	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element->getNodeName());
 
 	return schemaElement == schema.end() ? true : (*schemaElement)->canHaveText();
 }
 
 bool XMLValidator::canAddAttribute(dom::Element * element, std::string newAttribute)
 {
-	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element->getTagName());
+	std::vector<ValidChildren *>::iterator	schemaElement	= findSchemaElement(element->getNodeName());
 
 	return schemaElement == schema.end() ? true : (*schemaElement)->childIsValid(newAttribute, true);
 }

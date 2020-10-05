@@ -29,6 +29,11 @@ namespace dom
 	};
 };
 
+/** COMPOSITE PATTERN - Leaf
+ * This pattern is a leaf participant since it should have no children
+ *  and so implements those functions as do-nothing operations.
+ * It also implements the Component class (Node)
+ **/
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
 protected:
@@ -50,6 +55,12 @@ public:
 	virtual void			deleteData(int offset, int count);
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
+
+	//COMPOSITE - Prevent leaf from adding children
+	virtual dom::Node *		insertBefore(dom::Node * newChild, dom::Node * refChild);
+	virtual dom::Node *		replaceChild(dom::Node * newChild, dom::Node * oldChild);
+	virtual dom::Node *		removeChild(dom::Node * oldChild);
+	virtual dom::Node *		appendChild(dom::Node * newChild);
 };
 
 #endif // TEXT_H

@@ -20,22 +20,28 @@ namespace dom
 		virtual const std::string &	getAttribute(const std::string & name)					= 0;
 		virtual Attr *			getAttributeNode(const std::string & name)				= 0;
 		virtual NodeList *		getElementsByTagName(const std::string & tagName)			= 0;
-		virtual const std::string &	getTagName(void)							= 0;
 		virtual bool			hasAttribute(const std::string & name)					= 0;
 		virtual void			removeAttribute(const std::string & name)				= 0;
-		virtual Attr *			removeAttributeNode(Attr * oldAttr)					= 0;
 		virtual void			setAttribute(const std::string & name, const std::string & value)	= 0;
 		virtual Attr *			setAttributeNode(Attr * newAttr)					= 0;
 
-		virtual dom::NamedNodeMap *	getAttributes(void)							= 0;
-		virtual bool			hasAttributes(void)							= 0;
 	};
 };
 
+/** COMPOSITE PATTERN - Composite
+ * Implements the Component (Node) and has children
+ * This class in particular is modified more since it had
+ *  attributes being stores in their own container. It has
+ *  been modified so that attributes share the nodes container
+ *  from Node_Impl. It also has any function that did not have
+ *  unique necessary functionality for Attrs removed and will
+ *  use the Node_Impl methods if possbile.
+ **/
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
-	NamedNodeMap_Impl	attributes;
+	// no longer used with Composite Pattern
+	// NamedNodeMap_Impl	attributes;
 protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
 public:
@@ -46,15 +52,10 @@ public:
 	virtual const std::string &	getAttribute(const std::string & name);
 	virtual dom::Attr *		getAttributeNode(const std::string & name);
 	virtual dom::NodeList *		getElementsByTagName(const std::string & tagName);
-	virtual const std::string &	getTagName(void);
 	virtual bool			hasAttribute(const std::string & name);
 	virtual void			removeAttribute(const std::string & name);
-	virtual dom::Attr *		removeAttributeNode(dom::Attr * oldAttr);
 	virtual void			setAttribute(const std::string & name, const std::string & value);
 	virtual dom::Attr *		setAttributeNode(dom::Attr * newAttr);
-
-	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
-	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
 };
 
 #endif // ELEMENT_H

@@ -22,6 +22,11 @@ namespace dom
 	};
 };
 
+/** COMPOSITE PATTERN - Leaf
+ * This pattern is a leaf participant since it should have no children
+ *  and so implements those functions as do-nothing operations.
+ * It also implements the Component class (Node)
+ **/
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
 protected:
@@ -37,6 +42,12 @@ public:
 	virtual const std::string &	getValue(void);
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
+
+	//COMPOSITE - Prevent leaf from adding children
+	virtual dom::Node *		insertBefore(dom::Node * newChild, dom::Node * refChild);
+	virtual dom::Node *		replaceChild(dom::Node * newChild, dom::Node * oldChild);
+	virtual dom::Node *		removeChild(dom::Node * oldChild);
+	virtual dom::Node *		appendChild(dom::Node * newChild);
 };
 
 #endif // ATTR_H

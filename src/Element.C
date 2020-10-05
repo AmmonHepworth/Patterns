@@ -2,8 +2,7 @@
 #include "Attr.H"
 #include "Document.H"
 
-Element_Impl::Element_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ELEMENT_NODE),
-  attributes(document)
+Element_Impl::Element_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ELEMENT_NODE)
 {
 	Node_Impl::document	= document;
 }
@@ -14,12 +13,10 @@ Element_Impl::~Element_Impl()
 
 const std::string &	Element_Impl::getAttribute(const std::string & name)
 {
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 	{
-		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
-
-		if (attr->getName().compare(name) == 0)
-			return attr->getValue();
+		if ((*i)->getNodeName() == name)
+			return (*i)->getNodeValue();
 	}
 
 	static const std::string	empty_string("");
@@ -28,12 +25,10 @@ const std::string &	Element_Impl::getAttribute(const std::string & name)
 
 dom::Attr *		Element_Impl::getAttributeNode(const std::string & name)
 {
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 	{
-		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
-
-		if (attr->getName().compare(name) == 0)
-			return attr;
+		if ((*i)->getNodeName() == name)
+			return dynamic_cast<dom::Attr *>(*i);
 	}
 
 	return 0;
@@ -47,25 +42,20 @@ dom::NodeList *		Element_Impl::getElementsByTagName(const std::string & tagName)
 	{
 		dom::Element *	element;
 
-		if ((element = dynamic_cast<dom::Element *>(*i.operator->())) && element->getTagName().compare(tagName)==0)
+		if ((element = dynamic_cast<dom::Element *>(*i.operator->())) && element->getNodeName().compare(tagName)==0)
 			nodeList->push_back(*i.operator->());
 	}
 
 	return nodeList;
 }
 
-const std::string &	Element_Impl::getTagName(void)
-{
-	return getNodeName();
-}
-
 bool			Element_Impl::hasAttribute(const std::string & name)
 {
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 	{
 		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
 
-		if (attr->getName().compare(name) == 0)
+		if (attr != 0 && attr->getName().compare(name) == 0)
 			return true;
 	}
 
@@ -74,46 +64,29 @@ bool			Element_Impl::hasAttribute(const std::string & name)
 
 void			Element_Impl::removeAttribute(const std::string & name)
 {
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 	{
-		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
-
-		if (attr->getName().compare(name) == 0)
+		if ((*i)->getNodeName() == name)
 		{
-			attributes.erase(i);
+			getChildNodes()->erase(i);
 			return;
 		}
 	}
 }
 
-dom::Attr *		Element_Impl::removeAttributeNode(dom::Attr * oldAttr)
-{
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
-		if (*i.operator->() == oldAttr)
-		{
-			dom::Attr *	attribute	= (dom::Attr *)i.operator->();
-			attributes.erase(i);
-			return attribute;
-		}
-
-	throw dom::DOMException(dom::DOMException::NOT_FOUND_ERR, "Attribute not found.");
-}
-
 void			Element_Impl::setAttribute(const std::string & name, const std::string & value)
 {
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 	{
-		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
-
-		if (attr->getName().compare(name) == 0)
+		if ((*i)->getNodeName().compare(name) == 0)
 		{
-			attr->setValue(value);
+			(*i)->setNodeValue(value);
 			return;
 		}
 	}
 
 	dom::Attr *	attribute;
-	attributes.push_back(attribute = new Attr_Impl(name, value, dynamic_cast<Document_Impl *>(getOwnerDocument())));
+	getChildNodes()->push_back(attribute = new Attr_Impl(name, value, dynamic_cast<Document_Impl *>(getOwnerDocument())));
 	dynamic_cast<Node_Impl *>(dynamic_cast<Node *>(attribute))->setParent(this);
 }
 
@@ -127,15 +100,15 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 
 	dom::Attr *	oldAttribute	= 0;
 
-	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
-		if (dynamic_cast<dom::Attr *>(*i)->getName().compare(newAttr->getName()) == 0)
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		if ((*i)->getNodeName() == newAttr->getNodeName())
 		{
 			oldAttribute	= (dom::Attr *)i.operator->();
-			attributes.erase(i);
+			getChildNodes()->erase(i);
 			break;
 		}
 
 	dynamic_cast<Node_Impl *>(dynamic_cast<Node *>(newAttr))->setParent(this);
-	attributes.push_back(newAttr);
+	getChildNodes()->push_back(newAttr);
 	return oldAttribute;
 }

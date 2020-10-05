@@ -105,3 +105,34 @@ dom::Text *		Text_Impl::splitText(int offset)
 		throw dom::DOMException(dom::DOMException::INDEX_SIZE_ERR, "Index larget than Text node's value.");
 	}
 }
+
+
+/** COMPOSITE
+ * Prevent this leaf node from adding children
+ * The others children functions from Node_Impl should work fine,
+ *  since they'll just return empty lists that can be dealt with
+ **/
+dom::Node *		Text_Impl::insertBefore(dom::Node * newChild, dom::Node * refChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+	
+}
+
+dom::Node *		Text_Impl::replaceChild(dom::Node * newChild, dom::Node * oldChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}
+
+dom::Node *		Text_Impl::removeChild(dom::Node * oldChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}
+
+dom::Node *		Text_Impl::appendChild(dom::Node * newChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}

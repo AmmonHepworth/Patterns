@@ -33,3 +33,34 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 {
 	return (dom::Element *)Node_Impl::getParentNode();
 }
+
+
+/** COMPOSITE
+ * Prevent this leaf node from adding children
+ * The others children functions from Node_Impl should work fine,
+ *  since they'll just return empty lists that can be dealt with
+ **/
+dom::Node *		Attr_Impl::insertBefore(dom::Node * newChild, dom::Node * refChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+	
+}
+
+dom::Node *		Attr_Impl::replaceChild(dom::Node * newChild, dom::Node * oldChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}
+
+dom::Node *		Attr_Impl::removeChild(dom::Node * oldChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}
+
+dom::Node *		Attr_Impl::appendChild(dom::Node * newChild)
+{
+	//do nothing, child cannot be added
+	return 0;
+}
