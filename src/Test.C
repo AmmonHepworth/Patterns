@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include "Attr.H"
 #include "Document.H"
 #include "Element.H"
@@ -6,6 +7,7 @@
 #include "XMLTokenizer.H"
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
+#include "Iterator.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -137,6 +139,8 @@ void testSerializer(int argc, char** argv)
 	xmlSerializer.serializePretty(document);
 	XMLSerializer	xmlSerializer2(argv[3]);
 	xmlSerializer2.serializeMinimal(document);
+
+
 
 	// delete Document and tree.
 }

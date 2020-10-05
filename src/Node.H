@@ -2,7 +2,9 @@
 #define NODE_H
 
 #include <string>
+class DomIterator;
 #include "NodeList.H"
+#include "Iterator.H"
 
 namespace dom
 {
@@ -42,6 +44,7 @@ namespace dom
 		virtual Node *			appendChild(Node * newChild)			= 0;
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
+		virtual DomIterator *   createIterator(void) 			= 0;
 	};
 
 	class DOMException
@@ -103,6 +106,8 @@ public:
 	virtual const std::string &	getLocalName(void);
 
 	virtual void setParent(dom::Node * parent);
+
+	virtual DomIterator * createIterator(void);
 };
 
 #endif // NODE_H

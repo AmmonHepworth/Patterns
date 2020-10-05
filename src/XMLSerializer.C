@@ -1,4 +1,5 @@
 #include "XMLSerializer.H"
+#include "Iterator.H"
 
 #include "Document.H"
 #include "Element.H"
@@ -11,105 +12,128 @@ void XMLSerializer::prettyIndentation()
 		file << "\t";
 }
 
-void XMLSerializer::serializePretty(dom::Node * node)
+void XMLSerializer::serializePretty(dom::Node * root)
 {
-	if (dynamic_cast<dom::Document *>(node) != 0)
+	int attrCount = 0;
+	auto i = *root->createIterator();
+	for(dom::Node * node = i.begin();
+	 !i.isDone();
+	  node = i.next())
 	{
-		file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		file << "\n";
-		serializePretty(dynamic_cast<dom::Document *>(node)->getDocumentElement());
-	}
-	else if (dynamic_cast<dom::Element *>(node) != 0)
-	{
-		prettyIndentation();
-		file << "<" << dynamic_cast<dom::Element *>(node)->getNodeName();
-
-		int	attrCount	= 0;
-		for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-		  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-		  i++)
+		if (dynamic_cast<dom::Document *>(node) != 0)
 		{
-			if(dynamic_cast<dom::Attr *> (*i) != 0)
-				serializeMinimal(*i);
-				attrCount++;
-		}
-
-		if (attrCount > 0)
-			file << " ";
-
-		if (dynamic_cast<dom::Element *>(node)->getChildNodes()->size() == 0)
-		{
-			file << "/>";
+			file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
 			file << "\n";
+			//serializePretty(dynamic_cast<dom::Document *>(node)->getDocumentElement());
 		}
-		else
+		else if (dynamic_cast<dom::Element *>(node) != 0)
 		{
-			file << ">";
-			file << "\n";
-			indentationLevel++;
-
-			for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-			  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-			  i++)
-				if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-					serializePretty(*i);
-
-			indentationLevel--;
 			prettyIndentation();
-			file << "</" << dynamic_cast<dom::Element *>(node)->getNodeName() + ">";
+			file << "<" << dynamic_cast<dom::Element *>(node)->getNodeName();
+
+			attrCount	= 0;
+			for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
+			i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+			i++)
+			{
+				if(dynamic_cast<dom::Attr *> (*i) != 0)
+				{
+					//serializeMinimal(*i);
+					attrCount++;
+					file <<
+					" " << dynamic_cast<dom::Attr *>(*i)->getName() << "=\"" << dynamic_cast<dom::Attr *>(*i)->getValue() << "\"";
+				}
+			}
+
+			if (attrCount > 0)
+				file << " ";
+
+			if (dynamic_cast<dom::Element *>(node)->getChildNodes()->size() == 0)
+			{
+				file << "/>";
+				file << "\n";
+			}
+			else
+			{
+				file << ">";
+				file << "\n";
+				indentationLevel++;
+
+/**
+				for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
+				i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+				i++)
+					if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
+						serializePretty(*i);
+**/
+
+				indentationLevel--;
+				prettyIndentation();
+				file << "</" << dynamic_cast<dom::Element *>(node)->getNodeName() + ">";
+				file << "\n";
+			}
+		}
+		else if (dynamic_cast<dom::Attr *>(node) != 0)
+		{
+		}
+		else if (dynamic_cast<dom::Text *>(node) != 0)
+		{
+			prettyIndentation();
+			file << dynamic_cast<dom::Text *>(node)->getData();
 			file << "\n";
 		}
-	}
-	else if (dynamic_cast<dom::Attr *>(node) != 0)
-	{
-		file <<
-		  " " << dynamic_cast<dom::Attr *>(node)->getName() << "=\"" << dynamic_cast<dom::Attr *>(node)->getValue() << "\"";
-	}
-	else if (dynamic_cast<dom::Text *>(node) != 0)
-	{
-		prettyIndentation();
-		file << dynamic_cast<dom::Text *>(node)->getData();
-		file << "\n";
 	}
 }
 
-void XMLSerializer::serializeMinimal(dom::Node * node)
+void XMLSerializer::serializeMinimal(dom::Node * root)
 {
-	if (dynamic_cast<dom::Document *>(node) != 0)
+	auto i = *root->createIterator();
+	for(dom::Node * node = i.begin();
+	 !i.isDone();
+	  node = i.next())
 	{
-		file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		serializeMinimal(dynamic_cast<dom::Document *>(node)->getDocumentElement());
-	}
-	else if (dynamic_cast<dom::Element *>(node) != 0)
-	{
-		file << "<" << dynamic_cast<dom::Element *>(node)->getNodeName();
-
-		for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-		  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-		  i++)
-		  if(dynamic_cast<dom::Attr *> (*i) != 0)
-				serializeMinimal(*i);
-
-		if (dynamic_cast<dom::Element *>(node)->getChildNodes()->size() == 0)
-			file << "/>";
-		else
+		if (dynamic_cast<dom::Document *>(node) != 0)
 		{
-			file << ">";
+			file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+			serializeMinimal(dynamic_cast<dom::Document *>(node)->getDocumentElement());
+		}
+		else if (dynamic_cast<dom::Element *>(node) != 0)
+		{
+			file << "<" << dynamic_cast<dom::Element *>(node)->getNodeName();
 
 			for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-			  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-			  i++)
-				if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-					serializeMinimal(*i);
+			i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+			i++)
+			if(dynamic_cast<dom::Attr *> (*i) != 0)
+				if(dynamic_cast<dom::Attr *> (*i) != 0)
+				{
+					//serializeMinimal(*i);
+					file <<
+					" " << dynamic_cast<dom::Attr *>(*i)->getName() << "=\"" << dynamic_cast<dom::Attr *>(*i)->getValue() << "\"";
+				}
 
-			file << "</" << dynamic_cast<dom::Element *>(node)->getNodeName() + ">";
+			if (dynamic_cast<dom::Element *>(node)->getChildNodes()->size() == 0)
+				file << "/>";
+			else
+			{
+				file << ">";
+/**
+				for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
+				i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+				i++)
+					if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
+						serializeMinimal(*i)
+**/
+
+				file << "</" << dynamic_cast<dom::Element *>(node)->getNodeName() + ">";
+			}
 		}
+		else if (dynamic_cast<dom::Attr *>(node) != 0)
+		{
+			file <<
+			" " << dynamic_cast<dom::Attr *>(node)->getName() << "=\"" << dynamic_cast<dom::Attr *>(node)->getValue() << "\"";
+		}
+		else if (dynamic_cast<dom::Text *>(node) != 0)
+			file << dynamic_cast<dom::Text *>(node)->getData();
 	}
-	else if (dynamic_cast<dom::Attr *>(node) != 0)
-	{
-		file <<
-		  " " << dynamic_cast<dom::Attr *>(node)->getName() << "=\"" << dynamic_cast<dom::Attr *>(node)->getValue() << "\"";
-	}
-	else if (dynamic_cast<dom::Text *>(node) != 0)
-		file << dynamic_cast<dom::Text *>(node)->getData();
 }

@@ -178,3 +178,8 @@ dom::Node *		Node_Impl::getSibling(int direction)
 			return *i;
 	}
 }
+
+DomIterator * Node_Impl::createIterator(void)
+{
+	return new DomIterator(this);
+}

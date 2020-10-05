@@ -223,6 +223,33 @@ Element.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Element.C.s
 .PHONY : Element.C.s
 
+Iterator.o: Iterator.C.o
+
+.PHONY : Iterator.o
+
+# target to build an object file
+Iterator.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Iterator.C.o
+.PHONY : Iterator.C.o
+
+Iterator.i: Iterator.C.i
+
+.PHONY : Iterator.i
+
+# target to preprocess a source file
+Iterator.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Iterator.C.i
+.PHONY : Iterator.C.i
+
+Iterator.s: Iterator.C.s
+
+.PHONY : Iterator.s
+
+# target to generate assembly for a file
+Iterator.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Iterator.C.s
+.PHONY : Iterator.C.s
+
 NamedNodeMap.o: NamedNodeMap.C.o
 
 .PHONY : NamedNodeMap.o
@@ -430,6 +457,9 @@ help:
 	@echo "... Element.o"
 	@echo "... Element.i"
 	@echo "... Element.s"
+	@echo "... Iterator.o"
+	@echo "... Iterator.i"
+	@echo "... Iterator.s"
 	@echo "... NamedNodeMap.o"
 	@echo "... NamedNodeMap.i"
 	@echo "... NamedNodeMap.s"
