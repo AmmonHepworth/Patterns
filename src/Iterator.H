@@ -6,6 +6,7 @@
 #include "Node.H"
 #include "NodeList.H"
 
+//Iterator
 class Iterator
 {
 
@@ -20,6 +21,7 @@ class Iterator
 
 };
 
+//ConcreteIterator
 class DomIterator
 {
     public:

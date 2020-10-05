@@ -17,6 +17,9 @@ namespace dom
 	 *  convenient way to get the default implementations into
 	 *  all of the dom types and keep Node abstract 
 	 **/
+	/** ITERATOR PATTERN - Aggregate
+	 *  This is the type that will be iterated through. Creates iterators if needed
+	 **/
 	class Node
 	{
 	public:
@@ -70,6 +73,9 @@ namespace dom
 	};
 };
 
+/** ITERATOR PATTERN - ConcreteAggregate
+ * Implementation of the Aggregate
+ **/
 class Node_Impl : public virtual dom::Node
 {
 private:
