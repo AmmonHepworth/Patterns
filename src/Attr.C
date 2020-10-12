@@ -33,13 +33,3 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 {
 	return (dom::Element *)Node_Impl::getParentNode();
 }
-
-/** STRATEGY PATTERN 
- * Implementation of DOM data extraction strategy inferface from Node
- **/
-std::string Attr_Impl::serialize(int indentationLevel)
-{
-	std::stringstream ss;
-	ss << " " << this->getName() << "=\"" << this->getValue() << "\"";
-	return ss.str();
-}

@@ -178,22 +178,3 @@ dom::Node *		Node_Impl::getSibling(int direction)
 			return *i;
 	}
 }
-
-std::string Node_Impl::serialize(int indentationLevel)
-{
-	std::cout << "Node implementation serialization attempted, aborting...." << std::endl;
-	exit(42);
-}
-
-/** STRATEGY
- * Sets the whitespace strategy for itself and all of it's children
- * Works for all nodes because the only outlier is Element with its attributes but
- *  that isnt a problem as attributes dont use a whitespace strategy anyway.
- **/
-void Node_Impl::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
-{
-	wsStrategy = s;
-	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
-		(*i.operator->())->setWhiteSpaceStrategyRecursive(s);
-	return;
-}

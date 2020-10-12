@@ -2,8 +2,6 @@
 #define TEXT_H
 
 #include <string>
-#include <fstream>
-#include <sstream>
 
 #include "Node.H"
 
@@ -31,9 +29,6 @@ namespace dom
 	};
 };
 
-/** STRATEGY PATTERN - ConcreteStrategy
- * This is a ConcreteStrategy, as it implements its own strategy for serialize()
- **/
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
 protected:
@@ -55,8 +50,6 @@ public:
 	virtual void			deleteData(int offset, int count);
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
-
-	virtual std::string serialize(int level=0);
 };
 
 #endif // TEXT_H

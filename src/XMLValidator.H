@@ -1,11 +1,8 @@
-#ifndef XMLVALIDATOR_H
-#define XMLVALIDATOR_H
 #include <string>
 #include <fstream>
 #include <ios>
 #include <vector>
 
-class Element;
 #include "Element.H"
 
 class ValidChildren
@@ -41,4 +38,3 @@ public:
 	virtual bool					canAddText(dom::Element * element);
 	virtual bool					canAddAttribute(dom::Element * element, std::string newAttribute);
 };
-#endif
