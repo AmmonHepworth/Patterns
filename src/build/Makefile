@@ -331,33 +331,6 @@ Text.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Text.C.s
 .PHONY : Text.C.s
 
-WhiteSpaceStrategy.o: WhiteSpaceStrategy.C.o
-
-.PHONY : WhiteSpaceStrategy.o
-
-# target to build an object file
-WhiteSpaceStrategy.C.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.o
-.PHONY : WhiteSpaceStrategy.C.o
-
-WhiteSpaceStrategy.i: WhiteSpaceStrategy.C.i
-
-.PHONY : WhiteSpaceStrategy.i
-
-# target to preprocess a source file
-WhiteSpaceStrategy.C.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.i
-.PHONY : WhiteSpaceStrategy.C.i
-
-WhiteSpaceStrategy.s: WhiteSpaceStrategy.C.s
-
-.PHONY : WhiteSpaceStrategy.s
-
-# target to generate assembly for a file
-WhiteSpaceStrategy.C.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.s
-.PHONY : WhiteSpaceStrategy.C.s
-
 XMLSerializer.o: XMLSerializer.C.o
 
 .PHONY : XMLSerializer.o
@@ -469,9 +442,6 @@ help:
 	@echo "... Text.o"
 	@echo "... Text.i"
 	@echo "... Text.s"
-	@echo "... WhiteSpaceStrategy.o"
-	@echo "... WhiteSpaceStrategy.i"
-	@echo "... WhiteSpaceStrategy.s"
 	@echo "... XMLSerializer.o"
 	@echo "... XMLSerializer.i"
 	@echo "... XMLSerializer.s"
