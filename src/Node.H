@@ -69,6 +69,9 @@ private:
 	dom::Node *	parent;
 	dom::NodeList	nodes;
 
+	//for some reason is private
+	double operator&() const;
+
 	dom::Node *			getSibling(int direction);
 protected:
 	dom::Document *	document;
@@ -97,5 +100,13 @@ public:
 
 	virtual void setParent(dom::Node * parent);
 };
+
+
+//ADDRESSOF IDIOM
+template <class T>
+T * addressof(T & n)
+{
+	return reinterpret_cast<T *>(& const_cast<char&>(reinterpret_cast<const volatile char &>(v)));
+}
 
 #endif // NODE_H
