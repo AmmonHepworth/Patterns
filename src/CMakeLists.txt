@@ -29,5 +29,8 @@ target_sources(Patterns PUBLIC
 	XMLTokenizer.H
 	XMLValidator.C
 	XMLValidator.H
+	DOMBuilder.C
+	DOMFactory.H
+	DOMFactory.C
 	)
 target_link_libraries(Patterns boost_regex)

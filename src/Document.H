@@ -12,6 +12,8 @@ namespace dom
 	class Attr;
 	class NodeList;
 
+	/** ABSTRACT FACTORY PATTERN - AbstractProduct 
+	 */
 	class Document : public virtual Node
 	{
 	public:
@@ -22,6 +24,8 @@ namespace dom
 	};
 };
 
+/** ABSTRACT FACTORY PATTERN - Product
+ */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
 public:

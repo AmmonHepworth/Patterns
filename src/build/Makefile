@@ -169,6 +169,60 @@ Attr.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Attr.C.s
 .PHONY : Attr.C.s
 
+DOMBuilder.o: DOMBuilder.C.o
+
+.PHONY : DOMBuilder.o
+
+# target to build an object file
+DOMBuilder.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilder.C.o
+.PHONY : DOMBuilder.C.o
+
+DOMBuilder.i: DOMBuilder.C.i
+
+.PHONY : DOMBuilder.i
+
+# target to preprocess a source file
+DOMBuilder.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilder.C.i
+.PHONY : DOMBuilder.C.i
+
+DOMBuilder.s: DOMBuilder.C.s
+
+.PHONY : DOMBuilder.s
+
+# target to generate assembly for a file
+DOMBuilder.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilder.C.s
+.PHONY : DOMBuilder.C.s
+
+DOMFactory.o: DOMFactory.C.o
+
+.PHONY : DOMFactory.o
+
+# target to build an object file
+DOMFactory.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMFactory.C.o
+.PHONY : DOMFactory.C.o
+
+DOMFactory.i: DOMFactory.C.i
+
+.PHONY : DOMFactory.i
+
+# target to preprocess a source file
+DOMFactory.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMFactory.C.i
+.PHONY : DOMFactory.C.i
+
+DOMFactory.s: DOMFactory.C.s
+
+.PHONY : DOMFactory.s
+
+# target to generate assembly for a file
+DOMFactory.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMFactory.C.s
+.PHONY : DOMFactory.C.s
+
 Document.o: Document.C.o
 
 .PHONY : Document.o
@@ -424,6 +478,12 @@ help:
 	@echo "... Attr.o"
 	@echo "... Attr.i"
 	@echo "... Attr.s"
+	@echo "... DOMBuilder.o"
+	@echo "... DOMBuilder.i"
+	@echo "... DOMBuilder.s"
+	@echo "... DOMFactory.o"
+	@echo "... DOMFactory.i"
+	@echo "... DOMFactory.s"
 	@echo "... Document.o"
 	@echo "... Document.i"
 	@echo "... Document.s"

@@ -66,11 +66,10 @@ void testTokenizer(int argc, char** argv)
 
 	for (int i = 2; i < argc; i++)
 	{
-		XMLTokenizer	tokenizer(argv[i]);
+		XMLTokenizer	tokenizer(argv[i], new DOMBuilder(new DOMFactory));
+		tokenizer.parseDOM();
 
 		XMLTokenizer::XMLToken *	token	= 0;
-
-		printf("File:  '%s'\n", argv[i]);
 
 		do
 		{

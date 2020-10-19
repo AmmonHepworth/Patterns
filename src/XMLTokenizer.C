@@ -1,5 +1,7 @@
 #include "XMLTokenizer.H"
 #include <boost/cregex.hpp>
+#include <stack>
+#include <iostream>
 
 const char *	XMLTokenizer::PROLOG_START	= "<\\?";
 const char *	XMLTokenizer::PROLOG_IDENTIFIER	= "[[:space:]]*xml";
@@ -49,11 +51,12 @@ const char *	XMLTokenizer::XMLToken::toString(void)
 	}
 }
 
-XMLTokenizer::XMLTokenizer(const std::string & filename) :
+XMLTokenizer::XMLTokenizer(const std::string & filename, DOMBuilder * builder) :
   file(filename.c_str(), std::ios_base::in),
   line_number(0),
   index(0),
   inside_tag(false),
+  domBuilder(builder),
   prolog_start(PROLOG_START),
   prolog_identifier(PROLOG_IDENTIFIER),
   attribute_value(ATTRIBUTE_VALUE),
@@ -186,4 +189,22 @@ void		XMLTokenizer::update_matchers(boost::RegEx & matcher)
 
 	line	= line.substr(matcher.Length());
 	index	+= matcher.Length();
+}
+
+dom::Node * XMLTokenizer::parseDOM()
+{
+	XMLTokenizer::XMLToken *	token	= 0;
+	dom::Node * root = 0;
+	do
+	{
+		delete	token;
+		token	= getNextToken();
+		domBuilder->buildToken(token);
+
+		printf("\tLine %d:  %s = '%s'\n", getLineNumber(),
+			token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
+
+	} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
+
+	return domBuilder->getResult();
 }

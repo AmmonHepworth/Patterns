@@ -12,6 +12,8 @@ namespace dom
 	class NodeList;
 	class Document;
 
+	/** ABSTRACT FACTORY PATTERN - AbstractProduct 
+	 */
 	class Element : public virtual Node
 	{
 	public:
@@ -32,6 +34,8 @@ namespace dom
 	};
 };
 
+/** ABSTRACT FACTORY PATTERN - Product
+ */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
@@ -40,6 +44,7 @@ protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
 public:
 	friend class Document_Impl;
+	friend class DOMFactory;
 
 	virtual ~Element_Impl();
 

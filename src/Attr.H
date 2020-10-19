@@ -10,6 +10,8 @@ namespace dom
 	class Document;
 	class Element;
 
+	/** ABSTRACT FACTORY PATTERN - AbstractProduct 
+	 */
 	class Attr : public virtual Node
 	{
 	public:
@@ -22,6 +24,8 @@ namespace dom
 	};
 };
 
+/** ABSTRACT FACTORY PATTERN - Product
+ */
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
 protected:
@@ -30,6 +34,7 @@ protected:
 public:
 	friend class Document_Impl;
 	friend class Element_Impl;
+	friend class DOMFactory;
 
 	virtual ~Attr_Impl();
 

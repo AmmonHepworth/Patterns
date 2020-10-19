@@ -9,6 +9,8 @@ namespace dom
 {
 	class Document;
 
+	/** ABSTRACT FACTORY PATTERN - AbstractProduct 
+	 */
 	class Text : public virtual Node
 	{
 	public:
@@ -29,12 +31,15 @@ namespace dom
 	};
 };
 
+/** ABSTRACT FACTORY PATTERN - Product
+ */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
 protected:
 	Text_Impl(const std::string value, dom::Document * document);
 public:
 	friend class Document_Impl;
+	friend class DOMFactory;
 
 	virtual ~Text_Impl();
 

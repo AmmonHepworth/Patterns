@@ -1,7 +1,13 @@
+#ifndef XMLTOKENIZER_H
+#define XMLTOKENIZER_H
+class DOMBuilder;
+#include "DOMFactory.H"
+#include "Node.H"
 #include <string>
 #include <fstream>
 #include <ios>
 #include <boost/cregex.hpp>
+#include <stack>
 
 class XMLTokenizer
 {
@@ -11,6 +17,8 @@ private:
 	int			line_number;
 	int			index;
 	bool			inside_tag;
+
+	DOMBuilder * domBuilder;
 
 	static const char *	PROLOG_START;
 	static const char *	PROLOG_IDENTIFIER;
@@ -71,10 +79,52 @@ public:
 		virtual const char *		toString(void);
 	};
 
-	XMLTokenizer(const std::string & filename);
+	XMLTokenizer(const std::string & filename, DOMBuilder * builder);
 	~XMLTokenizer() {}
 
 	virtual int		getLineNumber(void)	{ return line_number; }
 	virtual int		getLineCharacter(void)	{ return index; }
 	virtual XMLToken *	getNextToken(void);
+	virtual dom::Node * parseDOM();
 };
+
+
+/** BUILDER PATTERN - Builder
+ * abstract class for defining builder interface
+ */
+class AbstractDOMBuilder
+{
+	public:
+    virtual dom::Document * buildDocument() = 0;
+    virtual dom::Node * buildElement(XMLTokenizer::XMLToken* token) = 0;
+    virtual dom::Node * buildAttribute(XMLTokenizer::XMLToken* token) = 0;
+    virtual dom::Node * buildText(XMLTokenizer::XMLToken* token) = 0;
+	virtual void buildToken(XMLTokenizer::XMLToken* token) = 0;
+    virtual dom::Node * addChild(dom::Node * root, XMLTokenizer::XMLToken * token) = 0;
+	virtual dom::Node * getResult() = 0;
+
+};
+
+/** BUILDER PATTERN - ConcreteBuilder
+ * concrete class implementing builder interface
+ */
+class DOMBuilder: public AbstractDOMBuilder
+{
+
+    public:
+    DOMBuilder(DOMFactory *);
+    virtual dom::Document * buildDocument();
+    virtual dom::Node * buildElement(XMLTokenizer::XMLToken* token);
+    virtual dom::Node * buildAttribute(XMLTokenizer::XMLToken* token);
+    virtual dom::Node * buildText(XMLTokenizer::XMLToken* token);
+	virtual void buildToken(XMLTokenizer::XMLToken* token);
+    virtual dom::Node * addChild(dom::Node * root, XMLTokenizer::XMLToken * token);
+	virtual dom::Node * getResult();
+
+    private:
+    DOMFactory * domFactory;
+    dom::Document * document;
+	dom::Node * curNode;
+	std::stack<dom::Node *> stack;
+};
+#endif

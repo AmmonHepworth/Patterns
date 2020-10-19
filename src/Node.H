@@ -8,6 +8,11 @@ namespace dom
 {
 	class Document;
 
+	/** BUILDER PATTERN - Product
+	 * This class is the interface for the products which the builder will build.
+	 * To me, this fit as the best product since they're all returned as pointers
+	 *  to a Node and are used polymorphically
+	 */
 	class Node
 	{
 	public:
