@@ -3,11 +3,14 @@
 
 #include <string>
 #include "NodeList.H"
+#include "xerces/xercesc/dom/DOMNode.hpp"
 
 namespace dom
 {
 	class Document;
 
+	/**ADAPTER PATTERN - Adaptee
+	 */
 	class Node
 	{
 	public:
