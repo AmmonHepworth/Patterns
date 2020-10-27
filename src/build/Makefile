@@ -358,6 +358,33 @@ Node.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Node.C.s
 .PHONY : Node.C.s
 
+StateExchangerMediator.o: StateExchangerMediator.C.o
+
+.PHONY : StateExchangerMediator.o
+
+# target to build an object file
+StateExchangerMediator.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/StateExchangerMediator.C.o
+.PHONY : StateExchangerMediator.C.o
+
+StateExchangerMediator.i: StateExchangerMediator.C.i
+
+.PHONY : StateExchangerMediator.i
+
+# target to preprocess a source file
+StateExchangerMediator.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/StateExchangerMediator.C.i
+.PHONY : StateExchangerMediator.C.i
+
+StateExchangerMediator.s: StateExchangerMediator.C.s
+
+.PHONY : StateExchangerMediator.s
+
+# target to generate assembly for a file
+StateExchangerMediator.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/StateExchangerMediator.C.s
+.PHONY : StateExchangerMediator.C.s
+
 Subject.o: Subject.C.o
 
 .PHONY : Subject.o
@@ -553,6 +580,9 @@ help:
 	@echo "... Node.o"
 	@echo "... Node.i"
 	@echo "... Node.s"
+	@echo "... StateExchangerMediator.o"
+	@echo "... StateExchangerMediator.i"
+	@echo "... StateExchangerMediator.s"
 	@echo "... Subject.o"
 	@echo "... Subject.i"
 	@echo "... Subject.s"

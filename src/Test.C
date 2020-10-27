@@ -7,6 +7,7 @@
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
 #include "DOMBuilderObserver.H"
+#include "Mediator.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -70,8 +71,9 @@ void testTokenizer(int argc, char** argv)
 	{
 		DOMBuilder * builder = new DOMBuilder(new DOMFactory);
 		XMLTokenizer	tokenizer(argv[i], builder);
-		Observer * obs1 = new DOMBuilderObserver(builder);
-		Observer * obs2 = new DOMBuilderObserver(builder);
+		StateExchangerMediator* mediator = new StateExchangerMediator();
+		Observer * obs1 = new DOMBuilderObserver(builder, mediator);
+		Observer * obs2 = new DOMBuilderObserver(builder, mediator);
 		tokenizer.parseDOM();
 
 		XMLTokenizer::XMLToken *	token	= 0;

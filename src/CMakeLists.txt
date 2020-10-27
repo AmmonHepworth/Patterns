@@ -37,5 +37,9 @@ target_sources(Patterns PUBLIC
 	Observer.H
 	DOMBuilderObserver.H
 	DOMBuilderObserver.C
+	Mediator.H
+	StateExchangerMediator.H
+	StateExchangerMediator.C
+	Colleague.H
 	)
 target_link_libraries(Patterns boost_regex)
