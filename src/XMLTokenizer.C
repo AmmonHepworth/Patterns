@@ -2,6 +2,7 @@
 #include <boost/cregex.hpp>
 #include <stack>
 #include <iostream>
+#include <algorithm>
 
 const char *	XMLTokenizer::PROLOG_START	= "<\\?";
 const char *	XMLTokenizer::PROLOG_IDENTIFIER	= "[[:space:]]*xml";
@@ -207,4 +208,10 @@ dom::Node * XMLTokenizer::parseDOM()
 	} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
 
 	return domBuilder->getResult();
+}
+
+
+XMLTokenizer::XMLToken * DOMBuilder::getState()
+{
+	return curState;
 }

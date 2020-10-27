@@ -196,6 +196,33 @@ DOMBuilder.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilder.C.s
 .PHONY : DOMBuilder.C.s
 
+DOMBuilderObserver.o: DOMBuilderObserver.C.o
+
+.PHONY : DOMBuilderObserver.o
+
+# target to build an object file
+DOMBuilderObserver.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilderObserver.C.o
+.PHONY : DOMBuilderObserver.C.o
+
+DOMBuilderObserver.i: DOMBuilderObserver.C.i
+
+.PHONY : DOMBuilderObserver.i
+
+# target to preprocess a source file
+DOMBuilderObserver.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilderObserver.C.i
+.PHONY : DOMBuilderObserver.C.i
+
+DOMBuilderObserver.s: DOMBuilderObserver.C.s
+
+.PHONY : DOMBuilderObserver.s
+
+# target to generate assembly for a file
+DOMBuilderObserver.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/DOMBuilderObserver.C.s
+.PHONY : DOMBuilderObserver.C.s
+
 DOMFactory.o: DOMFactory.C.o
 
 .PHONY : DOMFactory.o
@@ -330,6 +357,33 @@ Node.s: Node.C.s
 Node.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Node.C.s
 .PHONY : Node.C.s
+
+Subject.o: Subject.C.o
+
+.PHONY : Subject.o
+
+# target to build an object file
+Subject.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Subject.C.o
+.PHONY : Subject.C.o
+
+Subject.i: Subject.C.i
+
+.PHONY : Subject.i
+
+# target to preprocess a source file
+Subject.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Subject.C.i
+.PHONY : Subject.C.i
+
+Subject.s: Subject.C.s
+
+.PHONY : Subject.s
+
+# target to generate assembly for a file
+Subject.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Subject.C.s
+.PHONY : Subject.C.s
 
 Test.o: Test.C.o
 
@@ -481,6 +535,9 @@ help:
 	@echo "... DOMBuilder.o"
 	@echo "... DOMBuilder.i"
 	@echo "... DOMBuilder.s"
+	@echo "... DOMBuilderObserver.o"
+	@echo "... DOMBuilderObserver.i"
+	@echo "... DOMBuilderObserver.s"
 	@echo "... DOMFactory.o"
 	@echo "... DOMFactory.i"
 	@echo "... DOMFactory.s"
@@ -496,6 +553,9 @@ help:
 	@echo "... Node.o"
 	@echo "... Node.i"
 	@echo "... Node.s"
+	@echo "... Subject.o"
+	@echo "... Subject.i"
+	@echo "... Subject.s"
 	@echo "... Test.o"
 	@echo "... Test.i"
 	@echo "... Test.s"

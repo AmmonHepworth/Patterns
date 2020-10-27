@@ -3,6 +3,7 @@
 class DOMBuilder;
 #include "DOMFactory.H"
 #include "Node.H"
+#include "Subject.H"
 #include <string>
 #include <fstream>
 #include <ios>
@@ -89,9 +90,6 @@ public:
 };
 
 
-/** BUILDER PATTERN - Builder
- * abstract class for defining builder interface
- */
 class AbstractDOMBuilder
 {
 	public:
@@ -105,10 +103,8 @@ class AbstractDOMBuilder
 
 };
 
-/** BUILDER PATTERN - ConcreteBuilder
- * concrete class implementing builder interface
- */
-class DOMBuilder: public AbstractDOMBuilder
+//OBSERVER PATTERN - ConcreteSubject
+class DOMBuilder: public AbstractDOMBuilder, public Subject
 {
 
     public:
@@ -121,10 +117,13 @@ class DOMBuilder: public AbstractDOMBuilder
     virtual dom::Node * addChild(dom::Node * root, XMLTokenizer::XMLToken * token);
 	virtual dom::Node * getResult();
 
+	XMLTokenizer::XMLToken * getState();
+
     private:
     DOMFactory * domFactory;
     dom::Document * document;
 	dom::Node * curNode;
 	std::stack<dom::Node *> stack;
+	XMLTokenizer::XMLToken* curState; //for observers
 };
 #endif

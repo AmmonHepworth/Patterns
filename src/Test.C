@@ -6,6 +6,7 @@
 #include "XMLTokenizer.H"
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
+#include "DOMBuilderObserver.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -64,9 +65,13 @@ void testTokenizer(int argc, char** argv)
 	delete attr;
 	delete document;
 
+
 	for (int i = 2; i < argc; i++)
 	{
-		XMLTokenizer	tokenizer(argv[i], new DOMBuilder(new DOMFactory));
+		DOMBuilder * builder = new DOMBuilder(new DOMFactory);
+		XMLTokenizer	tokenizer(argv[i], builder);
+		Observer * obs1 = new DOMBuilderObserver(builder);
+		Observer * obs2 = new DOMBuilderObserver(builder);
 		tokenizer.parseDOM();
 
 		XMLTokenizer::XMLToken *	token	= 0;
@@ -76,8 +81,8 @@ void testTokenizer(int argc, char** argv)
 			delete	token;
 			token	= tokenizer.getNextToken();
 
-			printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
-			  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
+			//printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
+			//  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
 
 		} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
 

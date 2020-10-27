@@ -32,5 +32,10 @@ target_sources(Patterns PUBLIC
 	DOMBuilder.C
 	DOMFactory.H
 	DOMFactory.C
+	Subject.H
+	Subject.C
+	Observer.H
+	DOMBuilderObserver.H
+	DOMBuilderObserver.C
 	)
 target_link_libraries(Patterns boost_regex)

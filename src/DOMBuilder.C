@@ -55,36 +55,32 @@ dom::Node * DOMBuilder::getResult()
 
 void DOMBuilder::buildToken(XMLTokenizer::XMLToken* token)
 {
+    curState = token;
     switch(token->getTokenType())
     {
         case XMLTokenizer::XMLToken::PROLOG_END:
             document = buildDocument();
-            std::cout << "Building doc" << std::endl;
             break;
         case XMLTokenizer::XMLToken::ELEMENT:
             curNode = buildElement(token);
-            std::cout << "adding new element" << std::endl;
             break;
         case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
             if(document) //prevent prologue attributes from being added
             {
                 addChild(stack.top(), token);
-                std::cout << "adding new attr to top of stack" << std::endl;
             }
             break;
         case XMLTokenizer::XMLToken::TAG_CLOSE_START:
             //pop off of stack, multiline tag closing
             stack.pop();
-            std::cout << "popping last element off stack" << std::endl;
             break;
         case XMLTokenizer::XMLToken::VALUE: //add text
             addChild(stack.top(), token);
-            std::cout << "adding text to top element on stack" << std::endl;
             break;
         case XMLTokenizer::XMLToken::TAG_END:
             //push one onto stack, multiline tag opening (if not multiline, uses null_tag_end)
             stack.push(curNode);
-            std::cout << "pushing new element to stack of size " << stack.size() << std::endl;
             break;
     }
+    notify();
 }
