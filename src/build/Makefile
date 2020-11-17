@@ -169,6 +169,33 @@ Attr.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Attr.C.s
 .PHONY : Attr.C.s
 
+Command.o: Command.C.o
+
+.PHONY : Command.o
+
+# target to build an object file
+Command.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Command.C.o
+.PHONY : Command.C.o
+
+Command.i: Command.C.i
+
+.PHONY : Command.i
+
+# target to preprocess a source file
+Command.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Command.C.i
+.PHONY : Command.C.i
+
+Command.s: Command.C.s
+
+.PHONY : Command.s
+
+# target to generate assembly for a file
+Command.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Command.C.s
+.PHONY : Command.C.s
+
 Document.o: Document.C.o
 
 .PHONY : Document.o
@@ -331,33 +358,6 @@ Text.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Text.C.s
 .PHONY : Text.C.s
 
-WhiteSpaceStrategy.o: WhiteSpaceStrategy.C.o
-
-.PHONY : WhiteSpaceStrategy.o
-
-# target to build an object file
-WhiteSpaceStrategy.C.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.o
-.PHONY : WhiteSpaceStrategy.C.o
-
-WhiteSpaceStrategy.i: WhiteSpaceStrategy.C.i
-
-.PHONY : WhiteSpaceStrategy.i
-
-# target to preprocess a source file
-WhiteSpaceStrategy.C.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.i
-.PHONY : WhiteSpaceStrategy.C.i
-
-WhiteSpaceStrategy.s: WhiteSpaceStrategy.C.s
-
-.PHONY : WhiteSpaceStrategy.s
-
-# target to generate assembly for a file
-WhiteSpaceStrategy.C.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/WhiteSpaceStrategy.C.s
-.PHONY : WhiteSpaceStrategy.C.s
-
 XMLSerializer.o: XMLSerializer.C.o
 
 .PHONY : XMLSerializer.o
@@ -451,6 +451,9 @@ help:
 	@echo "... Attr.o"
 	@echo "... Attr.i"
 	@echo "... Attr.s"
+	@echo "... Command.o"
+	@echo "... Command.i"
+	@echo "... Command.s"
 	@echo "... Document.o"
 	@echo "... Document.i"
 	@echo "... Document.s"
@@ -469,9 +472,6 @@ help:
 	@echo "... Text.o"
 	@echo "... Text.i"
 	@echo "... Text.s"
-	@echo "... WhiteSpaceStrategy.o"
-	@echo "... WhiteSpaceStrategy.i"
-	@echo "... WhiteSpaceStrategy.s"
 	@echo "... XMLSerializer.o"
 	@echo "... XMLSerializer.i"
 	@echo "... XMLSerializer.s"

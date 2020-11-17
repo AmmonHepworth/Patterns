@@ -4,6 +4,7 @@
 
 #include "Node.H"
 
+//COMMAND PATTERN - Receiver
 class XMLSerializer
 {
 private:

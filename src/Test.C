@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include "Attr.H"
 #include "Document.H"
 #include "Element.H"
@@ -6,6 +7,8 @@
 #include "XMLTokenizer.H"
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
+#include "Command.H"
+#include "Interpreter.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -86,6 +89,7 @@ void testTokenizer(int argc, char** argv)
 	}
 }
 
+//COMMAND PATTERN - Client
 void testSerializer(int argc, char** argv)
 {
 	if (argc < 4)
@@ -133,10 +137,31 @@ void testSerializer(int argc, char** argv)
 	//
 	// Serialize
 	//
-	XMLSerializer	xmlSerializer(argv[2]);
-	xmlSerializer.serializePretty(document);
-	XMLSerializer	xmlSerializer2(argv[3]);
-	xmlSerializer2.serializeMinimal(document);
+	char com = ' ';
+	Interpreter interp;
+	while(true)
+	{
+		std::cout << "pretty or minimal: ";
+		std::cin >> com;
+		if(com == 'p')
+		{
+			interp.storeCommand(new SerializePrettyCommand(document));
+		}
+		else if (com == 'm')
+		{
+			interp.storeCommand(new SerializeMinimalCommand(document));
+		}
+		else if (com == 'q')
+		{
+			interp.storeCommand(new QuitCommand());
+		}
+		else
+		{
+			std::cout << "BROKEN" << std::endl;
+		}
+		
+		interp.process();
+	}
 
 	// delete Document and tree.
 }
