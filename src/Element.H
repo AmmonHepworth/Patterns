@@ -29,9 +29,12 @@ namespace dom
 
 		virtual dom::NamedNodeMap *	getAttributes(void)							= 0;
 		virtual bool			hasAttributes(void)							= 0;
+
+		virtual void handle(std::string) = 0;
 	};
 };
 
+//CHAIN OF RESPONSIBILITY - ConcreteHandler
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
@@ -55,6 +58,9 @@ public:
 
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
+	
+	virtual void handle(std::string);
+
 };
 
 #endif // ELEMENT_H

@@ -19,9 +19,11 @@ namespace dom
 		virtual Text *		createTextNode(const std::string & data)	= 0;
 		virtual Attr *		createAttribute(const std::string & name)	= 0;
 		virtual Element *	getDocumentElement()				= 0;
+		virtual void handle(std::string) = 0;
 	};
 };
 
+//CHAIN OF RESPONSIBILITY - ConcreteHandler
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
 public:
@@ -33,6 +35,9 @@ public:
 	virtual dom::Text *	createTextNode(const std::string & data);
 	virtual dom::Attr *	createAttribute(const std::string & name);
 	virtual dom::Element *	getDocumentElement();
+	
+	virtual void handle(std::string);
+
 };
 
 #endif // DOCUMENT_H

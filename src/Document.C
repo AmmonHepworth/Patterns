@@ -3,6 +3,7 @@
 #include "Text.H"
 #include "Attr.H"
 #include "NodeList.H"
+#include <iostream>
 
 Document_Impl::Document_Impl(void) : Node_Impl("", dom::Node::DOCUMENT_NODE)
 {
@@ -33,4 +34,9 @@ dom::Element * Document_Impl::getDocumentElement()
 			return dynamic_cast<dom::Element *>(*i.operator->());
 
 	return 0;
+}
+
+void Document_Impl::handle(std::string)
+{
+	std::cout << "Handled by top level document" << std::endl;
 }

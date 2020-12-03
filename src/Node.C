@@ -1,4 +1,5 @@
 #include "Node.H"
+#include <iostream>
 
 Node_Impl::Node_Impl(const std::string & n, short type) : name(n), nodeType(type), parent(0), document(0)
 {
@@ -178,3 +179,9 @@ dom::Node *		Node_Impl::getSibling(int direction)
 			return *i;
 	}
 }
+
+void Node_Impl::handle(std::string s) 
+{ 
+	if (parent) parent->handle(s);
+	else std::cout << "no parent handler" << std::endl;
+};

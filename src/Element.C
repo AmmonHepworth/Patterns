@@ -2,6 +2,8 @@
 #include "Attr.H"
 #include "Document.H"
 
+#include <iostream>
+
 Element_Impl::Element_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ELEMENT_NODE),
   attributes(document)
 {
@@ -138,4 +140,20 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 	dynamic_cast<Node_Impl *>(dynamic_cast<Node *>(newAttr))->setParent(this);
 	attributes.push_back(newAttr);
 	return oldAttribute;
+}
+
+void Element_Impl::handle(std::string handleAttr)
+{
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	{
+		dom::Attr * attr = dynamic_cast<dom::Attr *>(*i.operator->());
+		//Is this the right handler?
+		std::cout << "checking " << attr->getValue() << std::endl;
+		if (attr->getValue().compare(handleAttr) == 0)
+		{
+			std::cout << "Handled by a " << attr->getValue() << " handler" << std::endl;
+			return;
+		}
+	}
+	Node_Impl::handle(handleAttr);
 }

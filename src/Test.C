@@ -113,7 +113,7 @@ void testSerializer(int argc, char** argv)
 
 	dom::Element *	child		= document->createElement("element");
 	dom::Attr *	attr		= document->createAttribute("attribute");
-	attr->setValue("attribute value");
+	attr->setValue("handler1");
 	child->setAttributeNode(attr);
 	root->appendChild(child);
 
@@ -121,14 +121,20 @@ void testSerializer(int argc, char** argv)
 	root->appendChild(child);
 
 	child				= document->createElement("element");
-	child->setAttribute("attribute", "attribute value");
-	child->setAttribute("attribute2", "attribute2 value");
+	child->setAttribute("attribute", "handler2");
+	child->setAttribute("attribute2", "hanlder2 extra");
 	dom::Text *	text		= document->createTextNode("Element Value");
 	child->appendChild(text);
 	root->appendChild(child);
 
+	dom::Element * innerHandle				= document->createElement("element");
+	innerHandle->setAttribute("attribute", "handler3");
+	child->appendChild(innerHandle);
+
 	child				= document->createElement("element");
 	root->appendChild(child);
+
+	innerHandle->handle("handler2");
 
 	//
 	// Serialize
