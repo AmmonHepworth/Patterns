@@ -8,6 +8,7 @@ namespace dom
 {
 	class Document;
 
+	//CHAIN OF RESPONSIBILITY - Handler
 	class Node
 	{
 	public:
@@ -61,6 +62,7 @@ namespace dom
 	};
 };
 
+//CHAIN OF RESPONSIBILITY - ConcreteHandler
 class Node_Impl : public virtual dom::Node
 {
 private:

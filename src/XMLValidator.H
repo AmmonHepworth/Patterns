@@ -1,8 +1,12 @@
+#ifndef XMLVALIDATOR_H
+#define XMLVALIDATOR_H
 #include <string>
 #include <fstream>
 #include <ios>
 #include <vector>
 
+
+#include "ValidatorMemento.H"
 #include "Element.H"
 
 class ValidChildren
@@ -23,6 +27,8 @@ public:
 	virtual bool		childIsValid(const std::string & child, bool isAttribute);
 };
 
+//MEMENTO - Originator
+class ValidatorMemento;
 class XMLValidator
 {
 private:
@@ -37,4 +43,7 @@ public:
 	virtual bool					canAddElement(dom::Element * element, std::string newElement);
 	virtual bool					canAddText(dom::Element * element);
 	virtual bool					canAddAttribute(dom::Element * element, std::string newAttribute);
+	void setMemento(ValidatorMemento * );
+	ValidatorMemento* createMemento();
 };
+#endif

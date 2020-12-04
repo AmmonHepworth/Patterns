@@ -331,6 +331,33 @@ Text.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Text.C.s
 .PHONY : Text.C.s
 
+ValidatorMemento.o: ValidatorMemento.C.o
+
+.PHONY : ValidatorMemento.o
+
+# target to build an object file
+ValidatorMemento.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/ValidatorMemento.C.o
+.PHONY : ValidatorMemento.C.o
+
+ValidatorMemento.i: ValidatorMemento.C.i
+
+.PHONY : ValidatorMemento.i
+
+# target to preprocess a source file
+ValidatorMemento.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/ValidatorMemento.C.i
+.PHONY : ValidatorMemento.C.i
+
+ValidatorMemento.s: ValidatorMemento.C.s
+
+.PHONY : ValidatorMemento.s
+
+# target to generate assembly for a file
+ValidatorMemento.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/ValidatorMemento.C.s
+.PHONY : ValidatorMemento.C.s
+
 XMLSerializer.o: XMLSerializer.C.o
 
 .PHONY : XMLSerializer.o
@@ -442,6 +469,9 @@ help:
 	@echo "... Text.o"
 	@echo "... Text.i"
 	@echo "... Text.s"
+	@echo "... ValidatorMemento.o"
+	@echo "... ValidatorMemento.i"
+	@echo "... ValidatorMemento.s"
 	@echo "... XMLSerializer.o"
 	@echo "... XMLSerializer.i"
 	@echo "... XMLSerializer.s"

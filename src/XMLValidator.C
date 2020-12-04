@@ -68,3 +68,16 @@ bool ValidChildren::childIsValid(const std::string & child, bool isAttribute)
 
 	return false;
 }
+
+void XMLValidator::setMemento(ValidatorMemento * vm)
+{
+	schema = vm->getState();
+
+}
+
+ValidatorMemento* XMLValidator::createMemento()
+{
+	ValidatorMemento* newVM = new ValidatorMemento();
+	newVM->setState(schema);
+	return newVM;
+}
