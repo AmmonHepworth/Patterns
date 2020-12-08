@@ -331,6 +331,33 @@ Node.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Node.C.s
 .PHONY : Node.C.s
 
+State.o: State.C.o
+
+.PHONY : State.o
+
+# target to build an object file
+State.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/State.C.o
+.PHONY : State.C.o
+
+State.i: State.C.i
+
+.PHONY : State.i
+
+# target to preprocess a source file
+State.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/State.C.i
+.PHONY : State.C.i
+
+State.s: State.C.s
+
+.PHONY : State.s
+
+# target to generate assembly for a file
+State.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/State.C.s
+.PHONY : State.C.s
+
 Test.o: Test.C.o
 
 .PHONY : Test.o
@@ -496,6 +523,9 @@ help:
 	@echo "... Node.o"
 	@echo "... Node.i"
 	@echo "... Node.s"
+	@echo "... State.o"
+	@echo "... State.i"
+	@echo "... State.s"
 	@echo "... Test.o"
 	@echo "... Test.i"
 	@echo "... Test.s"

@@ -3,6 +3,7 @@
 class DOMBuilder;
 #include "DOMFactory.H"
 #include "Node.H"
+#include "State.H"
 #include <string>
 #include <fstream>
 #include <ios>
@@ -96,35 +97,39 @@ class AbstractDOMBuilder
 {
 	public:
     virtual dom::Document * buildDocument() = 0;
-    virtual dom::Node * buildElement(XMLTokenizer::XMLToken* token) = 0;
-    virtual dom::Node * buildAttribute(XMLTokenizer::XMLToken* token) = 0;
-    virtual dom::Node * buildText(XMLTokenizer::XMLToken* token) = 0;
+    virtual dom::Node * buildElement(std::string token) = 0;
+    virtual dom::Node * buildAttribute(std::string token) = 0;
+    virtual dom::Node * buildText(std::string token) = 0;
 	virtual void buildToken(XMLTokenizer::XMLToken* token) = 0;
     virtual dom::Node * addChild(dom::Node * root, XMLTokenizer::XMLToken * token) = 0;
 	virtual dom::Node * getResult() = 0;
 
 };
 
-/** BUILDER PATTERN - ConcreteBuilder
- * concrete class implementing builder interface
+/** State PATTERN - Context
  */
+class State;
 class DOMBuilder: public AbstractDOMBuilder
 {
 
     public:
     DOMBuilder(DOMFactory *);
+	void setState(State* s);
+	void setDocument(dom::Document* d);
     virtual dom::Document * buildDocument();
-    virtual dom::Node * buildElement(XMLTokenizer::XMLToken* token);
-    virtual dom::Node * buildAttribute(XMLTokenizer::XMLToken* token);
-    virtual dom::Node * buildText(XMLTokenizer::XMLToken* token);
+    virtual dom::Node * buildElement(std::string token);
+    virtual dom::Node * buildAttribute(std::string token);
+    virtual dom::Node * buildText(std::string token);
 	virtual void buildToken(XMLTokenizer::XMLToken* token);
     virtual dom::Node * addChild(dom::Node * root, XMLTokenizer::XMLToken * token);
 	virtual dom::Node * getResult();
 
-    private:
     DOMFactory * domFactory;
+    private:
     dom::Document * document;
 	dom::Node * curNode;
 	std::stack<dom::Node *> stack;
+	State* state;
 };
+
 #endif

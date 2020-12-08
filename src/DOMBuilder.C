@@ -12,25 +12,35 @@ DOMBuilder::DOMBuilder(DOMFactory * factory): domFactory(factory), document(0), 
 
 }
 
+void DOMBuilder::setDocument(dom::Document * d) { document = d; }
+
+void DOMBuilder::setState(State* s) 
+{
+    auto temp = state;
+    state = s;
+    delete temp;
+    return;
+}
+
 dom::Document * DOMBuilder::buildDocument()
 {
-    document = domFactory->createDocument();
+    document = state->buildDocument();
     return document;
 }
 
-dom::Node * DOMBuilder::buildElement(XMLTokenizer::XMLToken* token)
+dom::Node * DOMBuilder::buildElement(std::string token)
 {
-    return domFactory->createElement(token->getToken(), document);
+    return state->buildElement(token, document);
 }
 
-dom::Node * DOMBuilder::buildAttribute(XMLTokenizer::XMLToken* token)
+dom::Node * DOMBuilder::buildAttribute(std::string token)
 {
-    return domFactory->createAttribute(token->getToken(), document);
+    return state->buildAttribute(token, document);
 }
 
-dom::Node * DOMBuilder::buildText(XMLTokenizer::XMLToken* token)
+dom::Node * DOMBuilder::buildText(std::string token)
 {
-    return domFactory->createText(token->getToken(), document);
+    return state->buildText(token, document);
 }
 
 dom::Node * DOMBuilder::addChild(dom::Node * root, XMLTokenizer::XMLToken * token)
@@ -55,14 +65,16 @@ dom::Node * DOMBuilder::getResult()
 
 void DOMBuilder::buildToken(XMLTokenizer::XMLToken* token)
 {
+    std::string tokenName = token->getToken();
     switch(token->getTokenType())
     {
+        
         case XMLTokenizer::XMLToken::PROLOG_END:
             document = buildDocument();
             std::cout << "Building doc" << std::endl;
             break;
         case XMLTokenizer::XMLToken::ELEMENT:
-            curNode = buildElement(token);
+            curNode = buildElement(tokenName);
             std::cout << "adding new element" << std::endl;
             break;
         case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
