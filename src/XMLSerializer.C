@@ -5,6 +5,7 @@
 #include "Element.H"
 #include "Attr.H"
 #include "Text.H"
+#include "Visitor.H"
 
 void XMLSerializer::prettyIndentation()
 {
@@ -15,6 +16,7 @@ void XMLSerializer::prettyIndentation()
 void XMLSerializer::serializePretty(dom::Node * node)
 {
 	node->setWhiteSpaceStrategyRecursive(new PrettySpacingStrategy());
+
 	file << node->serialize();
 	return;
 }

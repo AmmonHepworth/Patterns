@@ -31,5 +31,7 @@ target_sources(Patterns PUBLIC
 	XMLValidator.H
 	WhiteSpaceStrategy.H
 	WhiteSpaceStrategy.C
+	Visitor.H
+	Visitor.C
 	)
 target_link_libraries(Patterns boost_regex)

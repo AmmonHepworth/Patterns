@@ -5,23 +5,13 @@
 #include <iostream>
 #include "NodeList.H"
 #include "WhiteSpaceStrategy.H"
+#include "Visitor.H"
 
 namespace dom
 {
 	class Document;
 
-	/** STRATEGY PATTERN - Strategy
-	 *  Node operates as the "Strategy" class in this pattern
-	 *  Below we see the common interface method "serialize" that 
-	 *   the ConcreteStrategies (Text_Impl, Attr_Impl, Element_Impl) will implement
-	 *  This will then be used by the XMLSerializer to write the appropriate data
-	 **/
-	/** STRATEGY PATTERN - Context
-	 * The Nodes also play the part of a context, having swappable WhiteSpaceStrategies
-	 *  that will help determine the kind of whitespace to use in their serialization
-	 * In this way, there is a nested Strategy Pattern. This strategy will in turn 
-	 *  use yet another strategy.
-	 **/
+	//VISITOR PATTERN - Element
 	class Node
 	{
 	public:
@@ -51,6 +41,7 @@ namespace dom
 		virtual const std::string &	getLocalName(void)				= 0;
 		virtual std::string     serialize(int indentlevel=0)                   = 0;
 		virtual void 			setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy * strategy) = 0;
+		virtual std::string			accept(Visitor * ) = 0;
 	};
 
 	class DOMException
@@ -76,6 +67,7 @@ namespace dom
 	};
 };
 
+//VISITOR PATTERN - ConcreteElement
 class Node_Impl : public virtual dom::Node
 {
 private:
@@ -116,6 +108,7 @@ public:
 	virtual void 			setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy * strategy);
 
 	virtual void setParent(dom::Node * parent);
+	virtual std::string accept(Visitor * );
 };
 
 #endif // NODE_H

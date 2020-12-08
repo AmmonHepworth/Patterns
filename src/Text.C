@@ -118,3 +118,8 @@ std::string Text_Impl::serialize(int indentationLevel)
 	ss << wsStrategy->getWhiteSpace();
 	return ss.str();
 }
+
+std::string Text_Impl::accept(Visitor * v)
+{
+	return v->visitText(this);
+}

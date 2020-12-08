@@ -178,7 +178,7 @@ void testValidator(int argc, char** argv)
 	schemaElement->addValidChild("attribute2", true);
 	schemaElement->setCanHaveText(true);
 
-	dom::Document *	document	= new ValidatedDocumentDecorator(new Document_Impl, &xmlValidator);
+	dom::Document *	document	= new Document_Impl();
 	dom::Element *	root		= 0;
 	dom::Element *	child		= 0;
 	dom::Attr *	attr		= 0;

@@ -331,6 +331,33 @@ Text.C.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Text.C.s
 .PHONY : Text.C.s
 
+Visitor.o: Visitor.C.o
+
+.PHONY : Visitor.o
+
+# target to build an object file
+Visitor.C.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Visitor.C.o
+.PHONY : Visitor.C.o
+
+Visitor.i: Visitor.C.i
+
+.PHONY : Visitor.i
+
+# target to preprocess a source file
+Visitor.C.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Visitor.C.i
+.PHONY : Visitor.C.i
+
+Visitor.s: Visitor.C.s
+
+.PHONY : Visitor.s
+
+# target to generate assembly for a file
+Visitor.C.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Patterns.dir/build.make CMakeFiles/Patterns.dir/Visitor.C.s
+.PHONY : Visitor.C.s
+
 WhiteSpaceStrategy.o: WhiteSpaceStrategy.C.o
 
 .PHONY : WhiteSpaceStrategy.o
@@ -469,6 +496,9 @@ help:
 	@echo "... Text.o"
 	@echo "... Text.i"
 	@echo "... Text.s"
+	@echo "... Visitor.o"
+	@echo "... Visitor.i"
+	@echo "... Visitor.s"
 	@echo "... WhiteSpaceStrategy.o"
 	@echo "... WhiteSpaceStrategy.i"
 	@echo "... WhiteSpaceStrategy.s"

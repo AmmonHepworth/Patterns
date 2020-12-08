@@ -7,6 +7,8 @@
 #include <sstream>
 
 #include "Node.H"
+#include "Visitor.H"
+class Visitor;
 
 namespace dom
 {
@@ -25,9 +27,7 @@ namespace dom
 	};
 };
 
-/** STRATEGY PATTERN
- * This is a ConcreteStrategy, as it implements its own strategy for serialize()
- **/
+//VISITOR PATTERN - ConcreteElement
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
 protected:
@@ -45,6 +45,7 @@ public:
 	virtual dom::Element *		getOwnerElement(void);
 
 	virtual std::string serialize(int level=0);
+	virtual std::string accept(Visitor * );
 };
 
 #endif // ATTR_H

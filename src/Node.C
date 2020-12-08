@@ -185,6 +185,11 @@ std::string Node_Impl::serialize(int indentationLevel)
 	exit(42);
 }
 
+std::string Node_Impl::accept(Visitor * v)
+{
+	return v->visitNode(this);
+}
+
 /** STRATEGY
  * Sets the whitespace strategy for itself and all of it's children
  * Works for all nodes because the only outlier is Element with its attributes but

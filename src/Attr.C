@@ -43,3 +43,8 @@ std::string Attr_Impl::serialize(int indentationLevel)
 	ss << " " << this->getName() << "=\"" << this->getValue() << "\"";
 	return ss.str();
 }
+
+std::string Attr_Impl::accept(Visitor * v)
+{
+	return v->visitAttr(this);
+}

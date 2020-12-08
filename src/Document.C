@@ -47,59 +47,7 @@ std::string Document_Impl::serialize(int indentation)
 		return file.str();
 }
 
-
-
-ValidatedDocumentDecorator::ValidatedDocumentDecorator(Document_Impl* doc, XMLValidator* val):Node_Impl("",dom::Node::DOCUMENT_NODE)
+std::string Document_Impl::accept(Visitor * v)
 {
-	decoratedDocument = doc;
-	validator = val;
-	Node_Impl::document	= decoratedDocument;
-}
-
-
-dom::Element *	ValidatedDocumentDecorator::createElement(const std::string & tagName)
-{
-	return new ValidatedElementDecorator(new Element_Impl(tagName, decoratedDocument), validator);
-}
-
-dom::Text *	ValidatedDocumentDecorator::createTextNode(const std::string & data)
-{
-	return decoratedDocument->createTextNode(data);
-}
-
-dom::Attr *	ValidatedDocumentDecorator::createAttribute(const std::string & name)
-{
-	return decoratedDocument->createAttribute(name);
-}
-
-dom::Element * ValidatedDocumentDecorator::getDocumentElement()
-{
-	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
-		if (dynamic_cast<dom::Element *>(*i.operator->()) != 0)
-			return dynamic_cast<dom::Element *>(*i.operator->());
-
-	return 0;
-}
-
-dom::Node * ValidatedDocumentDecorator::appendChild(dom::Node * child)
-{
-	if (validator->canRootElement("document"))
-	{
-		return decoratedDocument->appendChild(child);
-	}
-	else
-	{
-		printf("Attempted invalid schema operation.");
-		exit(0);
-	}
-}
-
-std::string ValidatedDocumentDecorator::serialize(int indentationLevel)
-{
-	return decoratedDocument->serialize(indentationLevel);
-}
-
-void ValidatedDocumentDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
-{
-	decoratedDocument->setWhiteSpaceStrategyRecursive(s);
+	return v->visitDocument(this);
 }

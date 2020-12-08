@@ -2,6 +2,7 @@
 #include "Attr.H"
 #include "Text.H"
 #include "Document.H"
+#include "Visitor.H"
 
 Element_Impl::Element_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ELEMENT_NODE),
   attributes(document)
@@ -149,6 +150,8 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 std::string Element_Impl::serialize(int indentationLevel)
 {
 	std::stringstream ss;
+	SerializeVisitor* sVisitor = new SerializeVisitor();
+	sVisitor->indentationLevel = indentationLevel;
 	ss << wsStrategy->getIndent(indentationLevel);
 	ss << "<" << this->getTagName();
 
@@ -158,7 +161,7 @@ std::string Element_Impl::serialize(int indentationLevel)
 		i != this->getAttributes()->end();
 		i++)
 	{
-		ss <<(*i)->serialize(indentationLevel);
+		ss <<(*i)->accept(sVisitor);
 		attrCount++;
 	}
 
@@ -176,11 +179,12 @@ std::string Element_Impl::serialize(int indentationLevel)
 		ss << wsStrategy->getWhiteSpace();
 		indentationLevel++;
 
+		sVisitor->indentationLevel = indentationLevel;
 		for (dom::NodeList::iterator i = this->getChildNodes()->begin();
 			i != this->getChildNodes()->end();
 			i++)
 			if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-				ss << (*i)->serialize(indentationLevel);
+				ss << (*i)->accept(sVisitor);
 				//serializePretty(*i);
 
 		indentationLevel--;
@@ -191,93 +195,7 @@ std::string Element_Impl::serialize(int indentationLevel)
 	return ss.str();
 }
 
-
-/******************DECORATOR******************/
-ValidatedElementDecorator::ValidatedElementDecorator(Element_Impl* elem, XMLValidator* val): Node_Impl("",dom::Node::ELEMENT_NODE)
+std::string Element_Impl::accept(Visitor * v)
 {
-	decoratedElement = elem;
-	validator = val;
-	Node_Impl::document	= elem->getOwnerDocument();
-}
-
-dom::Attr * ValidatedElementDecorator::setAttributeNode(dom::Attr * attr)
-{
-	if (validator->canAddAttribute(decoratedElement, attr->getName()))
-	{
-		return decoratedElement->setAttributeNode(attr);
-	}
-	else
-	{
-		printf("Attempted invalid schema operation.");
-		exit(0);
-	}
-}
-
-void ValidatedElementDecorator::setAttribute(const std::string & name, const std::string & value)
-{
-	if (validator->canAddAttribute(decoratedElement, "attribute"))
-		decoratedElement->setAttribute(name, value);
-	else
-	{
-		printf("Attempted invalid schema operation.");
-		exit(0);
-	}
-}
-
-dom::Node *	ValidatedElementDecorator::appendChild(dom::Node * child)
-{
-	if (validator->canAddElement(decoratedElement, "element") || validator->canAddText(decoratedElement))
-	{
-		decoratedElement->appendChild(child);
-	}
-	else
-	{
-		printf("Attempted invalid schema operation.");
-		exit(0);
-	}
-}
-
-const std::string &	ValidatedElementDecorator::getAttribute(const std::string & name)
-{
-	return decoratedElement->getAttribute(name);
-}
-
-dom::Attr * ValidatedElementDecorator::getAttributeNode(const std::string & name)
-{
-	return decoratedElement->getAttributeNode(name);
-}
-
-dom::NodeList *	ValidatedElementDecorator::getElementsByTagName(const std::string & tagName)
-{
-	return decoratedElement->getElementsByTagName(tagName);
-}
-
-const std::string &	ValidatedElementDecorator::getTagName(void)
-{
-	return decoratedElement->getTagName();
-}
-
-bool ValidatedElementDecorator::hasAttribute(const std::string & name)
-{
-	return decoratedElement->hasAttribute(name);
-}
-
-void ValidatedElementDecorator::removeAttribute(const std::string & name)
-{
-	decoratedElement->removeAttribute(name);
-}
-
-dom::Attr *	ValidatedElementDecorator::removeAttributeNode(dom::Attr * oldAttr)
-{
-	return decoratedElement->removeAttributeNode(oldAttr);
-}
-
-void ValidatedElementDecorator::setWhiteSpaceStrategyRecursive(WhiteSpaceStrategy* s)
-{
-	decoratedElement->setWhiteSpaceStrategyRecursive(s);
-}
-
-std::string ValidatedElementDecorator::serialize(int level)
-{
-	return decoratedElement->serialize(level);
+	return v->visitElement(this);
 }
